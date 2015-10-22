@@ -1,1 +1,38 @@
-<h1>Welcome</h1>
+
+    <ion-view title="Meetings">
+        <ion-nav-buttons side="right">
+          <button class="button button-icon button-clear ion-compose" ng-click="meetingModal.show()"></button>
+        </ion-nav-buttons>
+        <ion-content>
+        <ion-list>
+          <div class="item item-icon-left">
+            <i class="icon ion-ios-people"></i>Meeting list
+          </div>
+            <div class="item item-input-inset">
+              <label class="item-input-wrapper" id="search-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="text" placeholder="Search">
+              </label>
+            </div>
+            <ion-item class="item item-icon-right" href="#/menu/tab/viewmeeting">
+            <h2>Meeting 1</h2>
+            <p>Ngày : 21/10/2015</p>
+            <i class="icon ion-chevron-right icon-accessory"></i>
+          </ion-item>
+            <ion-item class="item item-icon-right" href="#/menu/tab/viewmeeting">
+            <h2>Meeting 1</h2>
+            <p>Ngày : 21/10/2015</p>
+            <i class="icon ion-chevron-right icon-accessory"></i>
+          </ion-item>
+            <ion-item class="item item-icon-right" href="#/menu/tab/viewmeeting">
+            <h2>Meeting 1</h2>
+            <p>Ngày : 21/10/2015</p>
+            <i class="icon ion-chevron-right icon-accessory"></i>
+          </ion-item>
+
+        </div>         
+
+        </ion-list>
+      </ion-content>
+
+    </ion-view>
