@@ -39,7 +39,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
           }
         }
     })
-    .state('main.viewmap', {
+    .state('main.menu.viewmap', {
       url: "/viewmap",
       views: {
           'menuContent': {
