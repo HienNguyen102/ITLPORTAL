@@ -1,0 +1,10 @@
+{
+    "cordova-plugin-geolocation": {
+        "source": {
+            "type": "local",
+            "path": "C:\\Users\\11520_000\\AppData\\Local\\Intel\\XDK\\xdk\\components\\server\\cordova-plugins\\cordova-plugin-geolocation"
+        },
+        "is_top_level": true,
+        "variables": {}
+    }
+}

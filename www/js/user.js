@@ -23,4 +23,33 @@ app.service('UserService', function() {
             }
         });
     }
+    this.getUserInfo = function (userId, callback) {
+        var rootSession;
+        this.login(rootUser, rootPass, function(response){
+            debugger;
+            rootSession = response.id;
+            var userParams = {
+                session: rootSession,
+                module_name: "Users",
+                id: userId,
+                select_fields: ["name","account_id"]
+            };
+            userParams = JSON.stringify(userParams);
+            $.ajax({
+                url : apiUrl,
+                type : "POST",
+                data : {
+                    method : "get_entry",
+                    input_type: "JSON",
+                    response_type: "JSON",
+                    rest_data: userParams,
+                },
+                dataType: "json",
+                success: function(response) {
+                    debugger;
+                    callback(response);
+                }
+            });
+        });
+    }
 });

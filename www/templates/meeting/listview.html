@@ -14,21 +14,10 @@
                 <input type="text" placeholder="Search" ng-model="keyword">
               </label>
             </div>
-            <ion-item class="item item-icon-right" href="#/menu/tab/viewmeeting">
-            <h2>Meeting 1</h2>
-            <p>Ngày : 21/10/2015</p>
+            <ion-item class="item item-icon-right" href="#/main/menu/viewmeeting/{{meeting.name_value_list.id.value}}" collection-repeat="meeting in meetings | filter:keyword">
+            <h2>{{meeting.name_value_list.name.value}}</h2>
+            <p>Ngày : {{meeting.name_value_list.date_start.value | date:'yyyy-MM-dd HH:mm:ss'}}</p>
             <i class="icon ion-chevron-right icon-accessory"></i>
-          </ion-item>
-            <ion-item class="item item-icon-right" href="#/menu/tab/viewmeeting">
-            <h2>Meeting 1</h2>
-            <p>Ngày : 21/10/2015</p>
-            <i class="icon ion-chevron-right icon-accessory"></i>
-          </ion-item>
-            <ion-item class="item item-icon-right" href="#/menu/tab/viewmeeting">
-            <h2>Meeting 1</h2>
-            <p>Ngày : 21/10/2015</p>
-            <i class="icon ion-chevron-right icon-accessory"></i>
-          </ion-item>
 
         </div>         
 

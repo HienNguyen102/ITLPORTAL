@@ -1,25 +1,14 @@
-
-<div class="modal" ng-controller="LoginCtrl">
-      <ion-header-bar class="bar bar-header bar-positive">
-        <h1 class="title">Login</h1>
-        <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
-      </ion-header-bar>
-      
-      <ion-content class="padding">
-        <div class="list">
-          <label class="item item-input">
-            <span class="input-label">User name</span>
-            <input type="text" ng-model="user.user_dname">
+<ion-view view-title="Đăng nhập" ng-controller="LoginCtrl" name="login-view">
+  <ion-content  class="padding">
+              <img style="width:70%; height:70%; margin-left:15%; margin-top:10%; margin-bottom:10%;" src="images/logo.png"/>
+          <label class="item item-input item-icon-left">
+              <i class="ion-person"></i><input type="text" style="margin-left:10px" placeholder="Tên đăng nhập" ng-model="data.user_name">
           </label>
-         <label class="item item-input">
-            <span class="input-label">User name</span>
-            <input type="text" ng-model="user.user_name">
+          <label class="item item-input item-icon-left">
+              <i class="ion-key"></i> <input type="password" style="margin-left:16px" placeholder="Mật khẩu" ng-model="data.password">
           </label>
-            <label class="item item-input">
-            <span class="input-label">Password</span>
-            <input type="password" ng-model="user.password">
-          </label>
-        </div>
-        <button class="button icon icon-right ion-arrow-right-c button-balanced button-block" ng-click="login(user)">Login</button>
-      </ion-content>
-</div>
+      </div>
+    <ion-checkbox ng-model="isChecked">Ghi nhớ đăng nhập</ion-checkbox>
+      <button class="button icon-center icon ion-log-in button-positive" style="width:100%; margin-top:10px;" ng-click="login(data)"> Đăng nhập</button>
+  </ion-content>
+</ion-view>

@@ -7,20 +7,16 @@
       <ion-content class="padding">
         <div class="list">
           <label class="item item-input">
-            <span class="input-label">Tiêu đề</span>
-            <input type="text" ng-model="meeting.title">
+            <input type="text" placeholder="Tiêu đề" ng-model="meeting.title">
           </label>
           <label class="item item-input">
-            <span class="input-label">Nội dung</span>
-            <textarea rows="4"></textarea>
+            <textarea placeholder="Nội dung" rows="4"></textarea>
           </label>
             <label class="item item-input">
-            <span class="input-label">Thời gian</span>
-            <input type="date" ng-model="meeting.start_date">
+            <input type="date" placeholder="Thời gian" ng-model="meeting.start_date">
           </label>
         <label class="item item-input">
-            <span class="input-label">Địa điểm</span>
-            <input type="text" ng-model="meeting.location">
+            <input type="text" placeholder="Địa điểm" g-places-autocomplete ng-model="meeting.location">
           </label>
         </div>
         <button class="button icon icon-right ion-arrow-right-c button-balanced button-block" ng-click="send(meeting)">Gửi</button>

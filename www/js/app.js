@@ -1,64 +1,84 @@
-var apiUrl = "http://localhost:8082/ITL/Trucking/custom/service/v4_1/rest.php";
-var app = angular.module('ionicApp', ['ionic'])
+//var apiUrl = "http://localhost:8082/ITL/Trucking/custom/service/v4_1/rest.php";
+var apiUrl = "http://trucking.giaiphapcrm.info/custom/service/v4_1/rest.php";
+var rootUser = 'web_service_admin';
+var rootPass = '^BQ^d.ndAG96gDY';
+var app = angular.module('ionicApp', ['ionic', 'ngCookies',  'google.places', 'ngCordova']);
 // Cau hinh route
 app.config(function ($stateProvider, $urlRouterProvider) {
 
   $stateProvider
-    .state('menu', {
-      url: "/menu",
+    .state('main', {
+      url: "/main",
       abstract: true,
-      templateUrl: "templates/menu.html",
-      controller: 'MenuCtrl'
+      templateUrl: "templates/main.html",
+      controller: 'MainCtrl'
     })
-    .state('menu.tabs', {
-      url: "/tab",
-      views: {
-        'menuContent' :{
-          templateUrl: "templates/tabs.html"
+    .state('main.login', {
+        url: "/login",
+        views: {
+            'mainContent' : {
+                templateUrl: "templates/user/login.html",
+            }
         }
-      }
     })
-    .state('menu.home', {
+    .state('main.menu', {
+      url: "/menu",
+      views: {
+          'mainContent': {
+              templateUrl: "templates/menu.html",
+              controller: 'MenuCtrl'
+          }
+        }
+    })
+    .state('main.menu.home', {
       url: "/home",
-      views :{
+      views: {
           'menuContent': {
               templateUrl: "templates/home.html",
               controller: 'HomeCtrl'
           }
         }
     })
-    .state('menu.tabs.login', {
-        url: "/login",
-        views :{
-            'view-tab': {
-                templateUrl: "templates/user/login.html",
-                controller: 'LoginCtrl',
-            }
+    .state('main.viewmap', {
+      url: "/viewmap",
+      views: {
+          'menuContent': {
+              templateUrl: "templates/map.html",
+              controller: 'MapCtrl'
+          }
         }
-  })
+    })
+    .state('main.menu.tabs', {
+      url: "/tab",
+      views: {
+        'mainContent' :{
+          templateUrl: "templates/tabs.html"
+        }
+      }
+    })
   //Cau hinh route cho module meeting
   // Route cua meeting list
-    .state('menu.tabs.meetings', {
+    .state('main.menu.meetings', {
         url: "/meetings",
         views: {
-            'view-tab': {
+            'menuContent': {
                 templateUrl: "templates/meeting/listview.html",
                 controller: 'ListMeetingCtrl',
             }
         }
     })
   // Route xem chi tiet meeting
-  .state('menu.tabs.viewmeeting', {
-    url: "/viewmeeting",
+  .state('main.menu.viewmeeting', {
+    url: "/viewmeeting/:id",
         views: {
-            'view-tab': {
+            'menuContent': {
                 templateUrl: "templates/meeting/detailview.html",
-//                controller: 'ViewMeetingCtrl',
+                controller: 'ViewMeetingCtrl',
             }
         }
   })
   //Route tao meeting
-    .state('menu.meetings.create', {
+    .state('main.menu.meetings.create', {
         url: "/create",
         views: {
             'menuContent': {
@@ -67,7 +87,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             }
         }
     })
-    .state('menu.meetings.view', {
+    .state('main.menu.meetings.view', {
         url: "/view",
         views: {
             'menuContent': {
@@ -88,7 +108,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         }
     });
     
-  $urlRouterProvider.otherwise("menu/tab/meetings");
+  $urlRouterProvider.otherwise("/main/login");
 
 })
 // Cac ham xu ly trong controller
