@@ -9,7 +9,7 @@ app.service('UserService', function() {
         };
         loginParams = JSON.stringify(loginParams);
         $.ajax({
-            url : apiUrl,
+              url : apiUrl,
             type : "POST",
             data : {
                 method : "login",
@@ -19,6 +19,7 @@ app.service('UserService', function() {
             },
             dataType: "json",
             success: function(response) {
+                console.log(response);
                 callback(response);
             }
         });
