@@ -59,44 +59,6 @@ app.controller('ListCtrl', function ($scope) {
 
 .controller('MainCtrl', function($scope) {
 })
-
-.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
-var options = {timeout: 10000, enableHighAccuracy: true};
-    debugger;
-  $cordovaGeolocation.getCurrentPosition(options).then(function(position){
- 
-    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
- 
-    var mapOptions = {
-      center: latLng,
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
- 
-    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
- 
-  }, function(error){
-    console.log("Could not get location");
-  });
-//    var mapView = new google.maps.Map(document.getElementById('map'), {
-//        zoom: 8,
-//        center: {lat: -34.397, lng: 150.644}
-//    });
-//    var geocoder = new google.maps.Geocoder();
-//    geocoder.geocode({'address': 'Thành Phố Hồ Chí Minh'}, function(results, status) {
-//    if (status === google.maps.GeocoderStatus.OK) {
-//      mapView.setCenter(results[0].geometry.location);
-//      var marker = new google.maps.Marker({
-//        map: mapView,
-//        position: results[0].geometry.location
-//      });
-//      $scope.map = mapView;
-//    } else {
-//      alert('Geocode was not successful for the following reason: ' + status);
-//    }
-//  });
-})
-
 .controller('ButtonsTabCtrl', function ($scope, $ionicPopup, $ionicActionSheet, $ionicModal) {
     $scope.showPopup = function () {
      $ionicPopup.alert({
@@ -138,26 +100,44 @@ var options = {timeout: 10000, enableHighAccuracy: true};
   }             
 })              
 
-.controller('MenuCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal) {              
-  $ionicModal.fromTemplateUrl('templates/modal.html', function (modal) {
-    $scope.modal = modal;
-  }, {
-    animation: 'slide-in-up'
-  });
+.controller('MenuCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal, $location) {              
+   //Khoi tao form tao meeting
     $ionicModal.fromTemplateUrl('templates/meeting/editview.html', function (meetingModal) {
-    $scope.meetingModal = meetingModal;
-  }, {
-    animation: 'slide-in-up'
-  });
+        $scope.meetingModal = meetingModal;
+    }, {
+        scope: $scope,
+        animation: 'slide-in-up',
+        focusFirstInput :true
+    });
+    
+        $scope.openModal = function() {
+     $scope.meetingModal.show();
+      };
+      $scope.closeModal = function() {
+        $scope.meetingModal.hide();
+      };
+      //Cleanup the modal when we're done with it!
+      $scope.$on('$destroy', function() {
+        $scope.meetingModal.remove();
+      });
+      // Execute action on hide modal
+      $scope.$on('meetingModal.hidden', function() {
+        // Execute action
+      });
+      // Execute action on remove modal
+      $scope.$on('meetingModal.removed', function() {
+        // Execute action
+      });
+    //$location.path("main/menu/home"); 
  })
   
- .controller('AppCtrl', function($location) {
+ .controller('AppCtrl', function($scope, $location, $ionicModal) {
 
   ionic.Platform.ready(function() {
   });
 
  })
- .controller('LoginCtrl', function($scope, $cookies, $cookieStore, $ionicLoading, $ionicPopup, $location, UserService) {
+ .controller('LoginCtrl', function($scope, $cookies, $cookieStore, $ionicLoading, $ionicPopup, $location, $state, UserService) {
     $scope.login = function(data) {
         $ionicLoading.show({
             templateUrl: 'templates/loading.html',
@@ -167,20 +147,19 @@ var options = {timeout: 10000, enableHighAccuracy: true};
             showDelay: 0
         });
         var sessionId = "";
-        debugger;
         UserService.login(data.user_name, data.password, function(result){
             $ionicLoading.hide();
+            debugger;
             if(result.id != null) {
-//                debugger;
-                UserService.getUserInfo(result.id.value, function(result){
-                    debugger;
+                UserService.getUserInfo(result.id, result.name_value_list.user_id.value,                        function(userInfo){
+                    var data = {
+                        sessionId: result.id,
+                        userInfo: userInfo
+                    };
+                    $cookieStore.put('data', JSON.stringify(data));
+                   // $location.path("main/menu");
+                    $state.go('main.menu.home');
                 });
-                var userInfo = {
-                    sessionId: result.id,
-                    id: result.id.value
-                }
-                $cookieStore.put('userInfo', JSON.stringify(userInfo));
-                $location.path("main/menu/home");
             }else {
                 $ionicPopup.alert({
                     title: 'Thông báo',
@@ -191,7 +170,6 @@ var options = {timeout: 10000, enableHighAccuracy: true};
     }
 })
 .controller('ViewMeetingCtrl', function($scope, $cookies, $cookieStore, $ionicLoading, $stateParams, MeetingService){
-    debugger;
     $ionicLoading.show({
             templateUrl: 'templates/loading.html',
             animation: 'fade-in',
@@ -199,29 +177,100 @@ var options = {timeout: 10000, enableHighAccuracy: true};
             maxWidth: 200,
             showDelay: 0
     });
-    var sessionId = JSON.parse($cookieStore.get('userInfo')).sessionId;
+    var sessionId = JSON.parse($cookieStore.get('data')).sessionId;
     MeetingService.getMeetingById(sessionId, $stateParams.id, function(result) {
-        debugger;
         $ionicLoading.hide();
         $scope.meeting = result;
+        MeetingService.location = result.location.value;
     });
 
 })
-.controller('CreateMeetingCtrl', function($scope) {
+.controller('MapCtrl', function($scope, $ionicLoading, $stateParams) {
+            debugger;
+            var address = decodeURIComponent($stateParams.address);
+            $ionicLoading.show({
+            templateUrl: 'templates/loading.html',
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
+        var myLatlng = new google.maps.LatLng(43.07493,-89.381388);
+        var mapOptions = {
+          center: myLatlng,
+          zoom: 16,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map"),
+            mapOptions);
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({'address': address}, function(results, status) {
+                $ionicLoading.hide();
+                if (status === google.maps.GeocoderStatus.OK) {
+                  map.setCenter(results[0].geometry.location);
+                  var marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                  });
+                } else {
+                  alert('Geocode was not successful for the following reason: ' + status);
+                }
+        });
+        $scope.map = map;
+    })
+.controller('CreateMeetingCtrl', function($scope, $cookies, $cookieStore, $ionicLoading, $location, $filter, MeetingService) {
+    // Set datetimepicker
+    $scope.datepickerObject = {
+      titleLabel: 'Chọn ngày',    //Optional
+      todayLabel: 'Hôm nay',    //Optional
+      closeLabel: 'Đóng',    //Optional
+      setLabel: 'OK',    //Optional
+      setButtonType : 'button-assertive',  //Optional
+      todayButtonType : 'button-assertive',  //Optional
+      closeButtonType : 'button-assertive',  //Optional
+      inputDate: new Date(),    //Optional
+      mondayFirst: true,    //Optional
+      templateType: 'popup', //Optional
+      modalHeaderColor: 'bar-positive', //Optional
+      modalFooterColor: 'bar-positive', //Optional
+      from: new Date(2012, 8, 2),    //Optional
+      to: new Date(2018, 8, 25),    //Optional
+      callback: function (val) {    //Mandatory
+        datePickerCallback(val);
+      }
+    };
+    var datePickerCallback = function (val) {
+      if (typeof(val) === 'undefined') {
+        console.log('No date selected');
+      } else {
+         $scope.datepickerObject.inputDate = val;
+    }
+};
     $scope.send = function(data){
-        alert(data.title + data.location);
+        debugger;
+        data.start_date =  '31/10/2015 05:45pm'//$filter('date')($scope.datepickerObject.inputDate, "dd/MM/yyyy")+' 12:00 pm';
+        var sessionId = JSON.parse($cookieStore.get('data')).sessionId;
+        var userInfo = JSON.parse($cookieStore.get('data')).userInfo;
+        var accountId = JSON.parse(userInfo).id;
+        $ionicLoading.show({
+            templateUrl: 'templates/loading.html',
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
+        MeetingService.sendMeeting(sessionId, accountId, data, function(result){
+            $ionicLoading.hide();
+            $scope.meetingModal.hide();
+            if(result.id != '') {
+                $location.path('main/menu/viewmeeting/'+ result.id);
+            }
+        });
     }
 })
 // Xu ly cua controller ListMeetingCrtl
  .controller('ListMeetingCtrl', function($scope, $cookies, $cookieStore, $ionicSideMenuDelegate, $ionicModal, $ionicLoading, UserService, MeetingService) {
-    
-    $ionicModal.fromTemplateUrl('templates/meeting/editview.html', function (meetingModal) {
-        $scope.meetingModal = meetingModal;
-    }, {
-        animation: 'slide-in-up'
-    });
-    
-    // Lay danh sach meeting
+     // Lay danh sach meeting
     //debugger;
     $ionicLoading.show({
         templateUrl: 'templates/loading.html',
@@ -230,9 +279,10 @@ var options = {timeout: 10000, enableHighAccuracy: true};
         maxWidth: 200,
         showDelay: 0
     });
-    debugger;
-    var sessionId = JSON.parse($cookieStore.get('userInfo')).sessionId;
-    MeetingService.getMeetingList(sessionId, function(result){
+    var sessionId = JSON.parse($cookieStore.get('data')).sessionId;
+    var userInfo = JSON.parse($cookieStore.get('data')).userInfo;
+    var accountId = JSON.parse(userInfo).id;
+    MeetingService.getMeetingList(sessionId, accountId, function(result){
             $scope.meetings = result.entry_list;
             $ionicLoading.hide();
     });

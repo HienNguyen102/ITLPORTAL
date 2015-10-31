@@ -24,23 +24,17 @@ app.service('UserService', function() {
             }
         });
     }
-    this.getUserInfo = function (userId, callback) {
-        var rootSession;
-        this.login(rootUser, rootPass, function(response){
-            debugger;
-            rootSession = response.id;
+    this.getUserInfo = function (sessionId, userId, callback) {
             var userParams = {
-                session: rootSession,
-                module_name: "Users",
-                id: userId,
-                select_fields: ["name","account_id"]
+                session: sessionId,
+                user_id: userId
             };
             userParams = JSON.stringify(userParams);
             $.ajax({
                 url : apiUrl,
                 type : "POST",
                 data : {
-                    method : "get_entry",
+                    method : "get_user_info",
                     input_type: "JSON",
                     response_type: "JSON",
                     rest_data: userParams,
@@ -51,6 +45,5 @@ app.service('UserService', function() {
                     callback(response);
                 }
             });
-        });
     }
 });
