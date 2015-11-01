@@ -1,0 +1,25 @@
+<ion-view title="Complaints">
+    <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-compose" ng-click="meetingModal.show()"></button>
+    </ion-nav-buttons>
+    <ion-content>
+        <ion-list>
+            <div class="item item-icon-left">
+                <i class="icon ion-ios-people"></i>Complaint list
+            </div>
+            <div class="item item-input-inset">
+                <label class="item-input-wrapper" id="search-input">
+                    <i class="icon ion-search placeholder-icon"></i>
+                    <input type="text" placeholder="Search" ng-model="keyword">
+                </label>
+            </div>
+            <ion-item class="item item-icon-right" href="#/main/menu/view_complaint/{{complaint.name_value_list.id.value}}" collection-repeat="complaint in complaints | filter:keyword">
+                <h2>{{complaint.name_value_list.name.value}}</h2>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+
+                </div>
+
+        </ion-list>
+    </ion-content>
+
+</ion-view>

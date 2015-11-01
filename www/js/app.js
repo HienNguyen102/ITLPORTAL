@@ -97,20 +97,30 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         }
     })
   //Cau hinh route cho module complaint
-  // Route cua complaint list
-    .state('menu.tabs.complaints', {
+  // Route cua complaint list #/menu/tab/complaints
+    .state('main.menu.complaints', {
         url: "/complaints",
         views: {
-            'view-tab': {
-                templateUrl: "templates/complaint/listview.html",
+            'menuContent': {
+                templateUrl: "templates/complaint/listview_complaint.html",
                 controller: 'ListComplaintCtrl',
             }
         }
-    });
+    })
+  // Route xem chi tiet complaint  #/main/menu/view_complaint/{{complaint.name_value_list.id.value}}
+  .state('main.menu.view_complaint', {
+    url: "/view_complaint/:id",
+        views: {
+            'menuContent': {
+                templateUrl: "templates/complaint/detailview_complaint.html",
+                controller: 'ViewComplaintCtrl',
+            }
+        }
+  });
     
   $urlRouterProvider.otherwise("/main/login");
 
 })
 
-              
+  
               

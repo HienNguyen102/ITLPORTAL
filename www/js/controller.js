@@ -103,12 +103,12 @@ app.controller('ListCtrl', function ($scope) {
 .controller('MenuCtrl', function($scope, $ionicSideMenuDelegate, $ionicModal, $location) {              
    //Khoi tao form tao meeting
     $ionicModal.fromTemplateUrl('templates/meeting/editview.html', function (meetingModal) {
-        $scope.meetingModal = meetingModal;
-    }, {
+    $scope.meetingModal = meetingModal;
+  }, {
         scope: $scope,
         animation: 'slide-in-up',
         focusFirstInput :true
-    });
+  });
     
         $scope.openModal = function() {
      $scope.meetingModal.show();
@@ -264,13 +264,13 @@ app.controller('ListCtrl', function ($scope) {
             $scope.meetingModal.hide();
             if(result.id != '') {
                 $location.path('main/menu/viewmeeting/'+ result.id);
-            }
+    }
         });
     }
 })
 // Xu ly cua controller ListMeetingCrtl
  .controller('ListMeetingCtrl', function($scope, $cookies, $cookieStore, $ionicSideMenuDelegate, $ionicModal, $ionicLoading, UserService, MeetingService) {
-     // Lay danh sach meeting
+    // Lay danh sach meeting
     //debugger;
     $ionicLoading.show({
         templateUrl: 'templates/loading.html',
@@ -289,4 +289,55 @@ app.controller('ListCtrl', function ($scope) {
     
     
 
- });
+ })
+ .controller('ListComplaintCtrl', function($scope, $cookies, $cookieStore, $ionicSideMenuDelegate, $ionicModal, $ionicLoading, UserService, ComplaintService) {
+    
+    /*$ionicModal.fromTemplateUrl('templates/complaint/editview.html', function (meetingModal) {
+        $scope.meetingModal = meetingModal;
+    }, {
+        animation: 'slide-in-up'
+    });*/
+    
+    // Lay danh sach complaint
+    //debugger;
+    $ionicLoading.show({
+        templateUrl: 'templates/loading.html',
+        animation: 'fade-in',
+        showBackdrop: true,
+        maxWidth: 200,
+        showDelay: 0
+    });
+    /*debugger;*/
+    var sessionId = JSON.parse($cookieStore.get('userInfo')).sessionId;
+    var userId = JSON.parse($cookieStore.get('userInfo')).userId;
+    console.log("controller userId:"+userId);
+    ComplaintService.getComplaintList(sessionId,userId, function(result){
+            $scope.complaints = result.entry_list;
+            console.log($scope.complaints);
+            $ionicLoading.hide();
+    });
+    console.log("controller listComplaint"+sessionId);
+    
+    
+
+ })
+.controller('ViewComplaintCtrl', function($scope, $cookies, $cookieStore, $ionicLoading, $stateParams, ComplaintService){
+    //debugger;
+   /* $ionicLoading.show({
+            templateUrl: 'templates/loading.html',
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+    });*/
+    var sessionId = JSON.parse($cookieStore.get('userInfo')).sessionId;
+    ComplaintService.getComplaintById(sessionId, $stateParams.id, function(result) {
+        //debugger;
+        $ionicLoading.hide();
+        $scope.complaint = result;
+        console.log(result);
+    });
+    //console.log("ViewComplaintCtrl");
+
+})
+;
