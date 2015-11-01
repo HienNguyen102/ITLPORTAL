@@ -149,11 +149,12 @@ app.controller('ListCtrl', function ($scope) {
         var sessionId = "";
         UserService.login(data.user_name, data.password, function(result){
             $ionicLoading.hide();
-            debugger;
+            //debugger;
             if(result.id != null) {
                 UserService.getUserInfo(result.id, result.name_value_list.user_id.value,                        function(userInfo){
                     var data = {
                         sessionId: result.id,
+                        userId: result.name_value_list.user_id.value,
                         userInfo: userInfo
                     };
                     $cookieStore.put('data', JSON.stringify(data));
@@ -308,15 +309,14 @@ app.controller('ListCtrl', function ($scope) {
         showDelay: 0
     });
     /*debugger;*/
-    var sessionId = JSON.parse($cookieStore.get('userInfo')).sessionId;
-    var userId = JSON.parse($cookieStore.get('userInfo')).userId;
-    console.log("controller userId:"+userId);
+    var sessionId = JSON.parse($cookieStore.get('data')).sessionId;
+    var userId = JSON.parse($cookieStore.get('data')).userId;
     ComplaintService.getComplaintList(sessionId,userId, function(result){
             $scope.complaints = result.entry_list;
             console.log($scope.complaints);
             $ionicLoading.hide();
     });
-    console.log("controller listComplaint"+sessionId);
+    //console.log("controller listComplaint"+sessionId);
     
     
 
