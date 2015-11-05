@@ -1,26 +1,105 @@
-<ion-view title="Complaint">
+<ion-view title="Chi tiết than phiền">
     <ion-content class="padding">
         <div class="list">
-            <!--<div class="item item-divider">
-                        <i class="ion-ios-pricetags-outline"></i> Tiều đề
+            <div class="item item-divider">
+                <i class="ion-information-circled" style="color:#007AFF"></i> Thông tin than phiền
+            </div>
+            <label class="item item-input">
+                <span class="input-label">Mã số khách hàng:</span>
+                <span>{{complaint.name.value}}</span>
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Địa chỉ email:</span>
+                <span>{{complaint.name.value}}</span>
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Độ ưu tiên:</span>
+                <span>{{complaint.priority.value}}</span>
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Lô hàng:</span>
+                <span>{{complaint.name.value}}</span>
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Tiêu đề:</span>
+                <span>{{complaint.name.value}}</span>
+            </label>
+            <label class="item item-input">
+                <span class="input-label">File đính kèm:</span>
+                <span>{{complaint.name.value}}</span>
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Trạng thái:</span>
+                <span>{{complaint.status.value}}</span>
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Ngày tạo:</span>
+                <span>{{complaint.date_entered.value}}</span>
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Mô tả:</span>
+                <span>{{complaint.description.value}}</span>
+            </label>
+            <!--<div class="item card" ng-if="relationshipList.length>0">
+                <div class="item item-divider">
+                <p>{{relationshipList.length}}</p>
+                </div>
+                <div class="item item-text-wrap">
+                    This is a basic Card with somae text.
+                </div>
+            </div>-->
+            <!--<div class="item" href="#" collection-repeat="relationship in relationshipList">{{relationship}}</div>-->
+            <div class="item card" href="#" ng-repeat="record in records">
+                <div class="item item-divider">
+                    <p>{{record.created_by_name.value}} [{{record.date_entered.value}}]</p>
+                </div>
+                <div class="item item-text-wrap">
+                    {{record.description.value}}
+                </div>
+                <div class="item item-text-wrap" ng-if='record.filename.value != ""'>
+                    File đính kèm: {{record.filename.value}}
+                </div>
+            </div>
+            <div ng-if="complaint.status.value=='New'">
+                <div class="item item-divider">
+                    <i class="ion-checkmark" style="color:#007AFF"></i> Kết thúc than phiền
+                </div>
+                <div class="item item-text-wrap" ng-controller="CloseComplaintCtrl">
+                    <p>Nếu quý khách đã hài lòng với sự xử lý của nhân viên, vui lòng đóng yêu cầu lại.</p>
+                    <button class="button icon-left ion-checkmark button-positive" ng-click="close()">Đóng</button>
+                </div>
+            </div>
+            <br>
+            <div ng-if="complaint.status.value=='New'">
+                <div class="item item-divider">
+                    <i class="ion-chatbubbles" style="color:#007AFF"></i> Gửi phản hồi
+                </div>
+                <div class="item item-text-wrap">
+                    <p>Nếu quý khách chưa hài lòng với sự xử lý của nhân viên, vui lòng gửi phản hồi để nhân viên xử lý lại.</p>
+                    <div class="item item-input-inset">
+                        <label class="item-input-wrapper">
+                            <!--<input type="text" placeholder="Nội dung yêu cầu: *">-->
+                            <textarea cols="40" rows="5" placeholder="Nội dung yêu cầu: *"></textarea>
+                        </label>
                     </div>
-                    <p class="item item-text-wrap">{{meeting.name.value}}</p>
-                    <div class="item item-divider">
-                        <i class="ion-clock"></i> Thời gian
+                    <div class="item item-input-inset">
+                        <button class="button button-small">
+                            Chọn file đính kèm:
+                        </button>
+                        <label class="item-input-wrapper">
+                            <input type="text" placeholder="No file chosen">
+                        </label>
                     </div>
-                    <p class="item">{{meeting.date_start.value}}</p>
-                    <div class="item item-divider">
-                        <i class="ion-ios-paper-outline"></i> Nội dung
-                    </div>
-                    <p class="item item-text-wrap">{{meeting.description.value}}</p>
-                    <div class="item item-divider">
-                        <i class="ion-ios-location-outline"></i> Địa điểm
-                    </div>
-                    <p class="item item-icon-right item-text-wrap">{{meeting.location.value}} <a href="#"><i class="icon ion-map"></i></a></p>
-                    <div class="item item-divider">
-                        <i class="ion-ios-information-outline"></i> Trạng thái
-                    </div>-->
-            <p class="item">{{complaint.name.value}}</p>
+                    <br>
+                    <button class="button icon-left ion-chatbubble-working button-positive" ng-click="send()">Gửi</button>
+                    <button class="button icon-left ion-ios-refresh-empty button-positive" ng-click="reset()">Làm lại</button>
+                </div>
+            </div>
         </div>
     </ion-content>
 </ion-view>
+<style>
+    .input-label {
+        width: 50%;
+    }
+</style>

@@ -20,6 +20,9 @@ app.service('ComplaintService', function () {
             },
             dataType: "json",
             success: function (response) {
+                angular.forEach(response.entry_list, function (item_arr) {
+                    console.log(item_arr);
+                });
                 callback(response);
             }
         });
@@ -29,11 +32,21 @@ app.service('ComplaintService', function () {
         var caseParams = {
             session: sessionId,
             module_name: "Cases",
-            id: complaintId
+            id: complaintId,
+            select_fields: ['id', 'case_number', 'name', 'description', 'status', 'priority', 'date_entered'],
+            link_name_to_fields_array: [
+                /*{
+                    name: 'c_booking_cases_1',
+                    value: ['name', 'trucking_booking_code']
+                }, */{
+                    name: 'notes',
+                    value: ['id', 'name', 'description', 'created_by_name', 'date_entered', 'filename']
+                }
+            ]
         }
 
         caseParams = JSON.stringify(caseParams);
-
+        //debugger;
         $.ajax({
             type: "POST",
             url: apiUrl,
@@ -45,8 +58,36 @@ app.service('ComplaintService', function () {
             },
             dataType: "json",
             success: function (response) {
-                //console.log(response);
-                callback(response.entry_list[0].name_value_list);
+                //debugger;
+                callback(response.entry_list[0].name_value_list,response.relationship_list[0]);
+            }
+        });
+    }
+    this.closeComplaint = function (sessionId, complaintId) {
+        //console.log("close complaint function");
+        debugger;
+        var caseParams = {
+            session: sessionId,
+            module_name: "Cases",
+            name_value_list: {
+                id: complaintId,
+                status: 'Closed'
+            }
+        }
+        caseParams = JSON.stringify(caseParams);
+        $.ajax({
+            type: "POST",
+            url: apiUrl,
+            data: {
+                method: "set_entry",
+                input_type: "JSON",
+                response_type: "JSON",
+                rest_data: caseParams,
+            },
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+                debugger;
             }
         });
     }

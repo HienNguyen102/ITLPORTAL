@@ -321,23 +321,35 @@ app.controller('ListCtrl', function ($scope) {
     
 
  })
-.controller('ViewComplaintCtrl', function($scope, $cookies, $cookieStore, $ionicLoading, $stateParams, ComplaintService){
+.controller('ViewComplaintCtrl', function($scope, $cookies, $cookieStore, $ionicLoading, $stateParams, UserService, ComplaintService){
     //debugger;
-   /* $ionicLoading.show({
+    $ionicLoading.show({
             templateUrl: 'templates/loading.html',
             animation: 'fade-in',
             showBackdrop: true,
             maxWidth: 200,
             showDelay: 0
-    });*/
-    var sessionId = JSON.parse($cookieStore.get('userInfo')).sessionId;
-    ComplaintService.getComplaintById(sessionId, $stateParams.id, function(result) {
+    });
+        var sessionId = JSON.parse($cookieStore.get('data')).sessionId;
+    ComplaintService.getComplaintById(sessionId, $stateParams.id, function(result,relationship_list) {
         //debugger;
         $ionicLoading.hide();
         $scope.complaint = result;
-        console.log(result);
+        console.log(relationship_list);
+        $scope.records=relationship_list[0].records;
+        debugger;
     });
-    //console.log("ViewComplaintCtrl");
+    UserService.getUserInfo(JSON.parse($cookieStore.get('data')).sessionId, JSON.parse($cookieStore.get('data')).userId, function (userInfo) {
+        //debugger;
+    });
 
+})
+.controller('CloseComplaintCtrl', function($scope, $cookieStore, $stateParams, ComplaintService){
+    //ComplaintService.closeComplaint();
+    $scope.close=function(){
+        var sessionId = JSON.parse($cookieStore.get('data')).sessionId;
+        ComplaintService.closeComplaint(sessionId,$stateParams.id);
+        //console.log($stateParams.id);
+    };
 })
 ;
