@@ -66,7 +66,7 @@ app.controller('ListCtrl', function ($scope) {
 
 app.controller('HomeCtrl', function ($scope) {});
 
-app.controller('MainCtrl', function ($scope) {})
+app.controller('MainCtrl', function ($scope) {});
 app.controller('ButtonsTabCtrl', function ($scope, $ionicPopup, $ionicActionSheet, $ionicModal) {
     $scope.showPopup = function () {
         $ionicPopup.alert({
@@ -410,39 +410,39 @@ app.controller('ViewComplaintCtrl', function ($scope, $cookies, $cookieStore, $i
 
 });
 app.controller('CloseComplaintCtrl', function ($scope, $cookieStore, $stateParams, ComplaintService) {
-        $scope.close = function () {
-            var sessionId = JSON.parse($cookieStore.get('data')).sessionId;
-            ComplaintService.closeComplaint(sessionId, $stateParams.id);
-            //console.log($stateParams.id);
-        };
-    })
-    .controller('CommentCtrl', function ($scope, $cookieStore, $stateParams, ComplaintService, $ionicPopup, $ionicPlatform) {
-        $scope.sendComment = function (commentDes) {
-            var sessionId = JSON.parse($cookieStore.get('data')).sessionId;
-            var userId = JSON.parse($cookieStore.get('data')).userId;
-            ComplaintService.sendCommentInService(sessionId, userId, commentDes, $stateParams.id);
-        };
-        $scope.readFile = function () {
-            //console.log("ReadFile");
-            ComplaintService.readFileInService($scope);
-        };
-        /*$scope.takePicture = function () {
-            console.log("takepic");
-            navigator.camera.getPicture(function (imageUri) {
-                    $scope.imgURI = "data:image/jpeg;base64," + imageUri;
-                },
-                function (error) {
-                    alert("Add photo failed " + error.code);
-                }, {
-                    quality: 50,
-                    destinationType: Camera.DestinationType.FILE_URI
-                }
-            );
-        }*/
-    });
+    $scope.close = function () {
+        var sessionId = JSON.parse($cookieStore.get('data')).sessionId;
+        ComplaintService.closeComplaint(sessionId, $stateParams.id);
+        //console.log($stateParams.id);
+    };
+});
+app.controller('CommentCtrl', function ($scope, $cookieStore, $stateParams, ComplaintService, $ionicPopup, $ionicPlatform) {
+    $scope.sendComment = function (commentDes) {
+        var sessionId = JSON.parse($cookieStore.get('data')).sessionId;
+        var userId = JSON.parse($cookieStore.get('data')).userId;
+        ComplaintService.sendCommentInService(sessionId, userId, commentDes, $stateParams.id);
+    };
+    $scope.readFile = function () {
+        //console.log("ReadFile");
+        ComplaintService.readFileInService($scope);
+    };
+    /*$scope.takePicture = function () {
+        console.log("takepic");
+        navigator.camera.getPicture(function (imageUri) {
+                $scope.imgURI = "data:image/jpeg;base64," + imageUri;
+            },
+            function (error) {
+                alert("Add photo failed " + error.code);
+            }, {
+                quality: 50,
+                destinationType: Camera.DestinationType.FILE_URI
+            }
+        );
+    }*/
+});
 app.controller('ViewAttachmentCtrl', function ($scope, $cookies, $cookieStore, $ionicLoading, $location, $filter, MeetingService) {
 
-})
+});
 app.controller('PictureCtrl', function ($scope, $cordovaCamera) {
 
     /*$scope.takePicture= function () {
