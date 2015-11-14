@@ -74,12 +74,12 @@
                 <div class="item item-divider">
                     <i class="ion-chatbubbles" style="color:#007AFF"></i> Gửi phản hồi
                 </div>
-                <div class="item item-text-wrap">
+                <div class="item item-text-wrap" ng-controller="CommentCtrl">
                     <p>Nếu quý khách chưa hài lòng với sự xử lý của nhân viên, vui lòng gửi phản hồi để nhân viên xử lý lại.</p>
                     <div class="item item-input-inset">
                         <label class="item-input-wrapper">
                             <!--<input type="text" placeholder="Nội dung yêu cầu: *">-->
-                            <textarea cols="40" rows="5" placeholder="Nội dung yêu cầu: *"></textarea>
+                            <textarea cols="40" rows="5" placeholder="Nội dung yêu cầu: *" ng-model="commentDes"></textarea>
                         </label>
                     </div>
                     <div class="item item-input-inset">
@@ -87,11 +87,17 @@
                             Chọn file đính kèm:
                         </button>
                         <label class="item-input-wrapper">
-                            <input type="text" placeholder="No file chosen">
+                            <!--<input type="text" placeholder="No file chosen">-->
+                            <input type="file" id="fileInput" onchange="angular.element(this).scope().readFile()"/>
                         </label>
                     </div>
+                    <div id="editor">e</div>
+                    <img style="width:50%; height: 50%" id="blah" src="#" alt="your image" />
+                    <img ng-src="{{imgURI}}" style="max-width: 100%">
                     <br>
-                    <button class="button icon-left ion-chatbubble-working button-positive" ng-click="send()">Gửi</button>
+                <button class="button icon-left ion-chatbubble-working button-positive" ng-click="takePicture()">Take Pic</button>
+                    
+                    <button class="button icon-left ion-chatbubble-working button-positive" ng-click="sendComment(commentDes)">Gửi</button>
                     <button class="button icon-left ion-ios-refresh-empty button-positive" ng-click="reset()">Làm lại</button>
                 </div>
             </div>
@@ -103,3 +109,10 @@
         width: 50%;
     }
 </style>
+<script type="text/javascript">
+    $("#fileInput").change(function(){
+        //readURL(this);
+        console.log("Da chon");
+        debugger;
+    });
+</script>

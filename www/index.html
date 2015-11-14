@@ -1,44 +1,52 @@
 <!DOCTYPE html>
-<html ng-app="ionicApp">
+<html>
+
 <head>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
 
-  <title>ITL PORTAL</title>
+    <title>ITL PORTAL</title>
 
-  <link href="lib/ionicframework/css/ionic.min.css" rel="stylesheet">
-  <link href="css/appstyle.css" rel="stylesheet">
-<link href="css/autocomplete.min.css" rel="stylesheet">
-<script src="lib/ionicframework/js/ionic.bundle.min.js"></script>
-<script src="lib/jquery.min.js"></script>
- <script src="lib/angular/angular-cookies.min.js"></script>
- <script src="lib/angular/filters.js"></script>
- <script src="lib/angular/angular-locale_vi-vn.js"></script>
- <script src="lib/angular/autocomplete.min.js"></script>
-<script src="lib/moment.js"></script>
-  <style>
-      .box {height:300px;padding: 10px}
-  </style>      
+    <link href="lib/ionicframework/css/ionic.min.css" rel="stylesheet">
+    <link href="css/appstyle.css" rel="stylesheet">
+    <link href="css/autocomplete.min.css" rel="stylesheet">
+
+    <script src="lib/ionicframework/js/ionic.bundle.min.js"></script>
+    <script src="cordova.js"></script>
+    <script src="lib/cordova/ng-cordova.min.js"></script>
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/angular/angular-cookies.min.js"></script>
+    <script src="lib/angular/filters.js"></script>
+    <script src="lib/angular/angular-locale_vi-vn.js"></script>
+    <script src="lib/angular/autocomplete.min.js"></script>
+    <script src="lib/moment.js"></script>
+    <script src="js/app.js"></script>
+    <style>
+        .box {
+            height: 300px;
+            padding: 10px
+        }
+    </style>
 </head>
 
-<body ng-controller="AppCtrl">
-  <ion-nav-bar class="nav-title-slide-ios7 bar-positive">
-    <ion-nav-back-button class="button-icon ion-arrow-left-c">
-    </ion-nav-back-button>
-  </ion-nav-bar>
+<body ng-app="ionicApp" ng-controller="AppCtrl">
+    <ion-nav-bar class="nav-title-slide-ios7 bar-positive">
+        <ion-nav-back-button class="button-icon ion-arrow-left-c">
+        </ion-nav-back-button>
+    </ion-nav-bar>
 
-  <ion-nav-view animation="slide-left-right"></ion-nav-view>
-<script src="lib/cordova/cordova.js"></script>
-<script src="lib/cordova/ng-cordova.min.js"></script>
-<script src="lib/ionic-datepicker.bundle.min.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/filter.js"></script>
-  <script src="js/user.js"></script>
-  <script src="js/meeting.js"></script>
+    <ion-nav-view animation="slide-left-right"></ion-nav-view>
+    <!--<script src="lib/cordova/ng-cordova.js"></script>-->
+    <script src="lib/ionic-datepicker.bundle.min.js"></script>
+    <!--<script src="js/app.js"></script>-->
+    <script src="js/filter.js"></script>
+    <script src="js/user.js"></script>
+    <script src="js/meeting.js"></script>
     <script src="js/complaint.js"></script>
-  <script src="js/controller.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MpqUqegaf1pZ0ctiNw9Trcj4KqOJnyk&sensor=true"></script>
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+    <script src="js/controller.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MpqUqegaf1pZ0ctiNw9Trcj4KqOJnyk&sensor=true"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 </body>
+
 </html>
