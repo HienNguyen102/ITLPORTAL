@@ -1,8 +1,72 @@
 {
-    "cordova-plugin-geolocation": {
+    "cordova-plugin-splashscreen": {
         "source": {
             "type": "local",
-            "path": "C:\\Users\\11520_000\\AppData\\Local\\Intel\\XDK\\xdk\\components\\server\\cordova-plugins\\cordova-plugin-geolocation"
+            "path": "C:\\Users\\HienNguyen\\AppData\\Local\\Intel\\XDK\\xdk\\components\\server\\cordova-plugins\\cordova-plugin-splashscreen"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-statusbar": {
+        "source": {
+            "type": "local",
+            "path": "C:\\Users\\HienNguyen\\AppData\\Local\\Intel\\XDK\\xdk\\components\\server\\cordova-plugins\\cordova-plugin-statusbar"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "org.apache.cordova.camera": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.camera@latest"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "org.apache.cordova.console": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.console@latest"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "org.apache.cordova.device": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.device@latest"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "org.apache.cordova.media-capture": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.media-capture@latest"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "org.apache.cordova.file": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.file"
+        },
+        "is_top_level": false,
+        "variables": {}
+    },
+    "org.apache.cordova.media": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.media@latest"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-dialogs": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-dialogs@latest"
         },
         "is_top_level": true,
         "variables": {}
