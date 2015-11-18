@@ -88,15 +88,33 @@
                         </button>
                         <label class="item-input-wrapper">
                             <!--<input type="text" placeholder="No file chosen">-->
-                            <input type="file" id="fileInput" onchange="angular.element(this).scope().readFile()"/>
+                            <input type="file" id="fileInput" onchange="angular.element(this).scope().readFile()" />
                         </label>
                     </div>
-                    <div id="editor">e</div>
-                    <img style="width:50%; height: 50%" id="blah" src="#" alt="your image" />
+                    <img style="width:50%; height: 50%" id="blah" ng-src="{{lastTakePhoto}}" alt="your image" />
                     <img ng-src="{{imgURI}}" style="max-width: 100%">
                     <br>
-                <button class="button icon-left ion-chatbubble-working button-positive" ng-click="takePicture()">Take Pic</button>
-                    
+                    <button class="button icon-left ion-chatbubble-working button-positive" ng-click="takePicture()">Take Pic</button>
+                    <!--<button class="button icon-left ion-chatbubble-working button-positive" ng-click="captureAudio()">Record</button>-->
+                    <a href="#/main/menu/create_record" class="button button-balanced button-block" ng-click="captureAudio()">Record New Sound Di</a>
+                    <div ng-if="sounds.length > 0">
+                        <ion-list show-delete="false" can-swipe="true">
+                            <ion-item ng-repeat="sound in sounds" ng-click="play($index)">
+                                {{sound.name}}
+
+                                <ion-option-button class="button-assertive" ng-click="delete($index)">
+                                    Delete
+                                </ion-option-button>
+
+                            </ion-item>
+                        </ion-list>
+                    </div>
+                    <div ng-if="sounds.length < 1">
+                        <p>
+                            No sounds yet. Why not record a new one?
+                        </p>
+                    </div>
+
                     <button class="button icon-left ion-chatbubble-working button-positive" ng-click="sendComment(commentDes)">Gửi</button>
                     <button class="button icon-left ion-ios-refresh-empty button-positive" ng-click="reset()">Làm lại</button>
                 </div>
@@ -110,7 +128,7 @@
     }
 </style>
 <script type="text/javascript">
-    $("#fileInput").change(function(){
+    $("#fileInput").change(function () {
         //readURL(this);
         console.log("Da chon");
         debugger;

@@ -1,11 +1,135 @@
-app.controller('AppCtrl', function ($scope, $cordovaCamera) {
+app.controller('RecordCtrl', function ($scope, Sounds, $state, $ionicHistory) {
+
+    $scope.sound = {
+        name: ""
+    };
+
+    $scope.saveSound = function () {
+        console.log('trying to save ' + $scope.sound.name);
+
+        //Simple error checking
+        if ($scope.sound.name === "") {
+            navigator.notification.alert("Name this sound first.", null, "Error");
+            return;
+        }
+
+        if (!$scope.sound.file) {
+            navigator.notification.alert("Record a sound first.", null, "Error");
+            return;
+        }
+
+        /*
+        begin the copy to persist location
+		
+        first, this path below is persistent on both ios and and
+        */
+        var loc = cordova.file.dataDirectory;
+        /*
+        but now we have an issue with file name. so let's use the existing extension, 
+        but a unique filename based on seconds since epoch
+        */
+        var extension = $scope.sound.file.split(".").pop();
+        var filepart = Date.now();
+        var filename = filepart + "." + extension;
+        console.log("new filename is " + filename);
+
+        window.resolveLocalFileSystemURL(loc, function (d) {
+            window.resolveLocalFileSystemURL($scope.sound.file, function (fe) {
+                fe.copyTo(d, filename, function (e) {
+                    console.log('success inc opy');
+                    console.dir(e);
+                    $scope.sound.file = e.nativeURL;
+                    $scope.sound.path = e.fullPath;
+
+                    Sounds.save($scope.sound).then(function () {
+                        $ionicHistory.nextViewOptions({
+                            disableBack: true
+                        });
+                        $state.go("home");
+                    });
+
+                }, function (e) {
+                    console.log('error in coipy');
+                    console.dir(e);
+                });
+            }, function (e) {
+                console.log("error in inner bullcrap");
+                console.dir(e);
+            });
+
+
+        }, function (e) {
+            console.log('error in fs');
+            console.dir(e);
+        });
+
+
+    }
+
+    var captureError = function (e) {
+        console.log('captureError', e);
+    }
+
+    var captureSuccess = function (e) {
+        console.log('captureSuccess');
+        console.dir(e);
+        $scope.sound.file = e[0].localURL;
+        $scope.sound.filePath = e[0].fullPath;
+    }
+
+    $scope.record = function () {
+        navigator.device.capture.captureAudio(
+            captureSuccess, captureError, {
+                duration: 10
+            });
+    }
+
+    $scope.play = function () {
+        if (!$scope.sound.file) {
+            navigator.notification.alert("Record a sound first.", null, "Error");
+            return;
+        }
+        var media = new Media($scope.sound.file, function (e) {
+            media.release();
+        }, function (err) {
+            console.log("media err", err);
+        });
+        media.play();
+    }
+});
+app.controller('AppCtrl', function ($scope, $cordovaCamera, $cordovaCapture, $cordovaMedia, $state) {
 
     $scope.takePicture = function () {
         $cordovaCamera.getPicture({}).then(function (imageData) {
-            alert("SUccess");
+            //alert("SUccess");
+            $scope.lastTakePhoto = imageData;
         }, function (err) {
             alert("ERRor");
         });
+    };
+    $scope.captureAudio = function () {
+        console.log("Hien");
+        /*var src = "myrecording.wav";
+        var mediaRec = new Media(src, function () {
+            alert("On SUccess");
+        }, function () {
+            alert("On error");
+        });
+
+        mediaRec.startRecord();
+
+        var recTime = 0;
+        var recInterval = setInterval(function () {
+            recTime = recTime + 1;
+            if (recTime >= 10) {
+                clearInterval(recInterval);
+                mediaRec.stopRecord();
+                mediaRec.play();
+            }
+        }, 1000);*/
+        //debugger;
+        //$state.go('main.menu.view_complaint.create_record');
+
     };
 });
 // Cac ham xu ly trong controller
@@ -355,7 +479,7 @@ app.controller('ListMeetingCtrl', function ($scope, $cookies, $cookieStore, $ion
 
 
 });
-app.controller('ListComplaintCtrl', function ($scope, $cookies, $cookieStore, $ionicSideMenuDelegate, $ionicModal, $ionicLoading, UserService, ComplaintService) {
+app.controller('ListComplaintCtrl', function ($scope, $cookies, $cookieStore, $ionicSideMenuDelegate, $ionicModal, $ionicLoading, UserService, ComplaintService, $ionicFilterBar) {
 
     /*$ionicModal.fromTemplateUrl('templates/complaint/editview.html', function (meetingModal) {
         $scope.meetingModal = meetingModal;
@@ -383,6 +507,18 @@ app.controller('ListComplaintCtrl', function ($scope, $cookies, $cookieStore, $i
         $ionicLoading.hide();
     });
     //console.log("controller listComplaint"+sessionId);
+    var filterBarInstance;
+    $scope.showFilterBar = function () {
+        filterBarInstance = $ionicFilterBar.show({
+            items: $scope.complaints,
+            update: function (filteredItems, filterText) {
+                $scope.complaints = filteredItems;
+                if (filterText) {
+                    console.log(filterText);
+                }
+            }
+        });
+    };
 
 
 
@@ -416,10 +552,12 @@ app.controller('CloseComplaintCtrl', function ($scope, $cookieStore, $stateParam
         //console.log($stateParams.id);
     };
 });
-app.controller('CommentCtrl', function ($scope, $cookieStore, $stateParams, ComplaintService, $ionicPopup, $ionicPlatform) {
+app.controller('CommentCtrl', function ($scope, $cookieStore, $stateParams, ComplaintService, $ionicPopup, $ionicPlatform, Sounds) {
     $scope.sendComment = function (commentDes) {
-        var sessionId = JSON.parse($cookieStore.get('data')).sessionId;
-        var userId = JSON.parse($cookieStore.get('data')).userId;
+        /*var sessionId = JSON.parse($cookieStore.get('data')).sessionId;
+        var userId = JSON.parse($cookieStore.get('data')).userId;*/
+        var sessionId = JSON.parse(localStorage.getItem('data')).sessionId;
+        var userId = JSON.parse(localStorage.getItem('data')).userId;
         ComplaintService.sendCommentInService(sessionId, userId, commentDes, $stateParams.id);
     };
     $scope.readFile = function () {
@@ -439,6 +577,50 @@ app.controller('CommentCtrl', function ($scope, $cookieStore, $stateParams, Comp
             }
         );
     }*/
+
+    var getSounds = function () {
+        console.log('getSounds called');
+        Sounds.get().then(function (sounds) {
+            console.dir(sounds);
+            $scope.sounds = sounds;
+        });
+    };
+
+    /*$scope.$on('$ionicView.enter', function () {
+        console.log('enter');
+        getSounds();
+    });*/
+
+    $scope.play = function (x) {
+        console.log('play', x);
+        Sounds.play(x);
+    };
+
+    $scope.delete = function (x) {
+        console.log('delete', x);
+        Sounds.get().then(function (sounds) {
+            var toDie = sounds[x];
+            window.resolveLocalFileSystemURL(toDie.file, function (fe) {
+                fe.remove(function () {
+                    Sounds.delete(x).then(function () {
+                        getSounds();
+                    });
+                }, function (err) {
+                    console.log("err cleaning up file", err);
+                });
+            });
+        });
+    };
+
+    $scope.cordova = {
+        loaded: false
+    };
+    $ionicPlatform.ready(function () {
+        $scope.$apply(function () {
+            $scope.cordova.loaded = true;
+        });
+    });
+
 });
 app.controller('ViewAttachmentCtrl', function ($scope, $cookies, $cookieStore, $ionicLoading, $location, $filter, MeetingService) {
 

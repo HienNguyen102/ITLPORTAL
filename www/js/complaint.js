@@ -110,8 +110,8 @@ app.service('ComplaintService', function () {
             fr.onload = function (event) {
                 //debugger;
                 $('#blah').attr('src', event.target.result);
-                $scope.srcSelectedImage=event.target.result;
-                $scope.test_thoi="test_thoi";
+                $scope.srcSelectedImage = event.target.result;
+                $scope.test_thoi = "test_thoi";
             }
         };
 
@@ -177,8 +177,9 @@ app.service('ComplaintService', function () {
                         object.filename = file.name;
                         object.data = event.target.result;
                         files.push(object);*/
-                        $('#blah').attr('src', e.target.result);
+                        //$('#blah').attr('src', e.target.result);
                         dataEncode = event.target.result;
+                        dataEncode=dataEncode.split("base64,")[1];
                         //}
                         //for file
                         var f = dataEncode;
@@ -203,7 +204,6 @@ app.service('ComplaintService', function () {
                             },
                             dataType: "json",
                             success: function (response) {
-                                debugger;
                                 console.log(response);
                             },
                             error: function (response) {

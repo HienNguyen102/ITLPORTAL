@@ -2,7 +2,7 @@
 var apiUrl = "http://trucking.giaiphapcrm.info/custom/service/v4_1/rest.php";
 var rootUser = 'web_service_admin';
 var rootPass = '^BQ^d.ndAG96gDY';
-var app = angular.module('ionicApp', ['ionic', 'ngCookies', 'google.places', 'ionic-datepicker', 'ngCordova']);
+var app = angular.module('ionicApp', ['ionic', 'ngCookies', 'google.places', 'ionic-datepicker', 'ngCordova', 'Recordservices', 'jett.ionic.filter.bar']);
 app.run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
         if (window.StatusBar) {
@@ -122,6 +122,15 @@ app.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $
                 'menuContent': {
                     templateUrl: "templates/complaint/detailview_complaint.html",
                     controller: 'ViewComplaintCtrl',
+                }
+            }
+        })
+        .state('main.menu.create_record', {
+            url: "/create_record",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/complaint/new_record.html",
+                    controller: 'RecordCtrl',
                 }
             }
         });
