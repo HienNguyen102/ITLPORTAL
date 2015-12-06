@@ -1,0 +1,31 @@
+<ion-view title="Chi tiết hợp đồng">
+    <ion-content class="padding">
+        <div class="list">
+            <div class="item item-divider">
+                <i class="ion-ios-pricetags-outline" style="color:#007AFF"></i> Tiều đề
+            </div>
+            <p class="item item-text-wrap">{{contract.name.value}}</p>
+            <div class="item item-divider">
+                <i class="ion-clock" style="color:#03A14D"></i> Thời gian
+            </div>
+            <div class="item item-text-wrap">
+                <div class="list">
+                    <div class="item item-divider">
+                        <i class="ion-speedometer" style="color:#007AFF"></i> Ngày bắt đầu
+                    </div>
+                    <div class="item item-text-wrap">{{contract.start_date.value | moment: 'format': 'DD/MM/YYYY'}}
+                    </div>
+                    <div class="item item-divider">
+                        <i class="ion-pin" style="color:#007AFF"></i> Ngày kết thúc
+                    </div>
+                    <div class="item item-text-wrap">{{contract.end_date.value | moment: 'format': 'DD/MM/YYYY'}}
+                    </div>
+                </div>
+            </div>
+            <div class="item item-divider">
+                <i class="ion-ios-information-outline" style="color:##3F9E06"></i> Trạng thái
+            </div>
+            <p class="item" style="margin-bottom: 100px">{{contract.status.value}}</p>
+        </div>
+    </ion-content>
+</ion-view>
