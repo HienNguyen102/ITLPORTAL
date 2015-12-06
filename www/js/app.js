@@ -28,6 +28,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $
             views: {
                 'mainContent': {
                     templateUrl: "templates/user/login.html",
+                    controller:'LoginCtrl'
                 }
             }
         })
@@ -50,8 +51,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $
             }
         })
         .state('main.menu.viewmap', {
-            //url: "/viewmap/:address",
-            url: "/viewmap",
+            url: "/viewmap/:address",
             views: {
                 'menuContent': {
                     templateUrl: "templates/map.html",
@@ -179,6 +179,31 @@ app.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $
                 'menuContent': {
                     templateUrl: "templates/contract/detailview_contract.html",
                     controller: 'ViewContractCtrl',
+                }
+            }
+        }).state('main.menu.viewprofile', {
+            url: "/viewprofile",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/user/detailview.html",
+                    controller: "ViewProfileCtrl",
+                }
+            }
+        }).state('main.menu.quotations', {
+            url: "/quotations",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/quotation/listview.html",
+                    controller: "ListQuotationCtrl",
+                }
+            }
+        })
+        .state('main.menu.viewquotation', {
+            url: "/viewquotation/:quoteid",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/quotation/detailview.html",
+                    controller: "ViewQuotationCtrl",
                 }
             }
         });

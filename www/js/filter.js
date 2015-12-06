@@ -6,4 +6,10 @@ app.filter('encodeURIComponent', function() {
         momentObj = moment(input);
     return momentObj[momentFn].apply(momentObj, args);
   };
-});
+})
+.filter('decodeHtml',function($sce){
+    return function(input){
+        return $sce.trustAsHtml(input);
+    }
+})
+;

@@ -1,18 +1,18 @@
-<ion-view view-title="Quotation">
-      <ion-content>
-        <ion-list show-delete="data.showDelete" on-delete="onItemDelete(item)" option-buttons="itemButtons">
-          <div class="item item-divider">
-           Quotation list
-          </div> 
+<ion-view title="Báo giá">
+    <ion-content>
+        <ion-list>
+            <div class="item item-icon-left">
+                <i class="icon ion-ios-paper" style="color:#FEC502"></i>Danh sách báo giá
+            </div>
+            <ion-item class="item item-icon-right" style="border-top: 1px solid #387EF5;" href="#/main/menu/viewquotation/{{quotation.id}}" collection-repeat="quotation in quotelist | filter:keyword">
+                <h2>{{quotation.quote_code}}</h2>
+                <p>Ngày báo giá: {{quotation.quotation_date}}</p>
+                <p>Loại hàng: {{quotation.commodity}}</p>
+                <i class="icon ion-chevron-right icon-accessory"></i>
 
-          <a class="item item-avatar" href="#/menu/tab/item">
-            <h2>Mã báo giá:KDHKK1222</h2>
-            <p>Ngày báo giá :12/10/2015</p>
-          </a>
-
-
-        </div>         
+                </div>
 
         </ion-list>
-      </ion-content>
-    </ion-view>
+    </ion-content>
+
+</ion-view>
