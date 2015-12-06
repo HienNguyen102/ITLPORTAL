@@ -20,7 +20,7 @@ app.service('MeetingService', function(){
             },
             dataType: "json",
             success: function(resultCount) {
-                debugger;
+                //debugger;
                 var totalRow = resultCount.result_count;
                 var meetingListParams = {
                     session: sessionId,
@@ -30,7 +30,7 @@ app.service('MeetingService', function(){
                     //offset: 0,
                     //select_fields: ["id", "name", "description", "start_date", "location", "status"],
                   // deleted: 0,
-                    max_results: totalRow,
+                    max_results: totalRow
                 };
                 
                 meetingListParams = JSON.stringify(meetingListParams);
@@ -45,7 +45,7 @@ app.service('MeetingService', function(){
                     },
                     dataType: "json",
                     success: function(response) {
-                        debugger;
+                        //debugger;
                         callback(response);
                     }
                 });

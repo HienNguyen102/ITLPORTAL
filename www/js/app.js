@@ -5,15 +5,17 @@ var rootPass = '^BQ^d.ndAG96gDY';
 var app = angular.module('ionicApp', ['ionic', 'ngCookies', 'google.places', 'ionic-datepicker', 'ngCordova', 'Recordservices', 'jett.ionic.filter.bar']);
 app.run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
-        if (window.StatusBar) {
+        /*if (window.StatusBar) {
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
-        }
+        }*/
     });
 });
 app.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $compileProvider) {
     $ionicConfigProvider.tabs.position('bottom'); // other values: top
-    $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
+    //$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
+    $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|blob):|data:image\//);
+    $ionicConfigProvider.backButton.text('Trở về');
     $stateProvider
         .state('main', {
             url: "/main",
@@ -48,7 +50,8 @@ app.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $
             }
         })
         .state('main.menu.viewmap', {
-            url: "/viewmap/:address",
+            //url: "/viewmap/:address",
+            url: "/viewmap",
             views: {
                 'menuContent': {
                     templateUrl: "templates/map.html",
@@ -115,7 +118,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $
                 }
             }
         })
-        // Route xem chi tiet complaint  #/main/menu/view_complaint/{{complaint.name_value_list.id.value}}
+        // Route xem chi tiet complaint
         .state('main.menu.view_complaint', {
             url: "/view_complaint/:id",
             views: {
@@ -131,6 +134,51 @@ app.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $
                 'menuContent': {
                     templateUrl: "templates/complaint/new_record.html",
                     controller: 'RecordCtrl',
+                }
+            }
+        })
+        .state('main.menu.show_attachment', {
+            url: "/show_attachment",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/complaint/show_attachment.html",
+                    controller: 'ViewAttachmentCtrl',
+                }
+            }
+        })
+        .state('main.menu.calls', {
+            url: "/calls",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/call/listcall.html",
+                    controller: 'ListCallCtrl',
+                }
+            }
+        })
+        .state('main.menu.view_call', {
+            url: "/view_call/:id",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/call/detailview_call.html",
+                    controller: 'ViewCallCtrl',
+                }
+            }
+        })
+        .state('main.menu.contracts', {
+            url: "/contracts",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/contract/listcontract.html",
+                    controller: 'ListContractCtrl',
+                }
+            }
+        })
+        .state('main.menu.view_contract', {
+            url: "/view_contract/:id",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/contract/detailview_contract.html",
+                    controller: 'ViewContractCtrl',
                 }
             }
         });

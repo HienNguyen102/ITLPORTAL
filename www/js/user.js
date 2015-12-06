@@ -2,8 +2,8 @@ app.service('UserService', function() {
     this.login = function (userName, password, callback) {
         var loginParams = {
             user_auth: {
-                user_name : userName,
-                password : password,
+                user_name : 'portaldemo',
+                password : '123456',
                 encryption : 'PLAIN'
             }
         };
@@ -19,7 +19,7 @@ app.service('UserService', function() {
             },
             dataType: "json",
             success: function(response) {
-                console.log(response);
+                //console.log(response);
                 callback(response);
             }
         });
@@ -41,7 +41,7 @@ app.service('UserService', function() {
                 },
                 dataType: "json",
                 success: function(response) {
-                    debugger;
+                    //debugger;
                     callback(response);
                 }
             });

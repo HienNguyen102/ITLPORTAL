@@ -26,7 +26,7 @@ angular.module('Recordservices', [])
 
         return deferred.promise;
     }
-
+    var media;
     var playSound = function (x) {
         getSounds().then(function (sounds) {
             var sound = sounds[x];
@@ -39,7 +39,7 @@ angular.module('Recordservices', [])
             if (device.platform.indexOf("iOS") >= 0) {
                 mediaUrl = "../Library/NoCloud/" + mediaUrl.split("/").pop();
             }
-            var media = new Media(mediaUrl, function (e) {
+            media = new Media(mediaUrl, function (e) {
                 media.release();
             }, function (err) {
                 console.log("media err", err);
@@ -47,11 +47,17 @@ angular.module('Recordservices', [])
             media.play();
         });
     }
-
+    var stopSound = function(x){
+        console.log("call stop");
+        media.stop();
+    }
     var saveSound = function (s) {
         console.log("calling saveSound");
         var deferred = $q.defer();
         getSounds().then(function (sounds) {
+            //Hien comment push
+            //sounds.push(s);
+            sounds=[];
             sounds.push(s);
             localStorage.mysoundboard = JSON.stringify(sounds);
             deferred.resolve();
@@ -64,6 +70,7 @@ angular.module('Recordservices', [])
         get: getSounds,
         save: saveSound,
         delete: deleteSound,
-        play: playSound
+        play: playSound,
+        stop: stopSound
     };
 });
