@@ -26,12 +26,12 @@ app.service('QuotationService', function () {
             module_name: "C_Quotes",
             id: quoteId,
             select_fields: [
-                'id', 'branch_id', 'trucking_quote_code', 'quotation_date', 'check_customer_approve',                     'billing_contact', 'contract', 'effect_date', 'expiration',                                               'trucking_commodity','trucking_transfer_type'
+                'id', 'branch_id', 'trucking_quote_code', 'quotation_date', 'check_customer_approve',                     'billing_contact_id', 'contract', 'effect_date', 'expiration',                                               'trucking_commodity','trucking_transfer_type', 'stage',                'trucking_broker_id','sale_source_ddown', 'user_ops_id',
             ],
             link_name_to_fields_array: [
                 {
                     name: 'c_quotes_c_salequotationroute_1',
-                    value: ['id', 'port_from', 'port_to', 'weight_value', 'unit', 'price_final',                                        'currency', 'status'
+                    value: ['id', 'port_from', 'port_to', 'weight_value', 'unit', 'price_final',                                        'currency', 'status','port_receipt', 'port_transfer', 'port_delivery', 'check_merge_quotation', 'supplier_id'
                     ]
                 }
             ]

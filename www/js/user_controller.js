@@ -10,8 +10,17 @@ app.controller('LoginCtrl', function ($scope, $cookies, $cookieStore, $ionicLoad
         var sessionId = "";
         UserService.login(data.user_name, data.password, function (result) {
             $ionicLoading.hide();
-            //debugger;
+            debugger;
             if (result.id != null) {
+                if (data.isChecked) {
+                    // Save login info to use
+                    var dataLogin = {
+                        username: data.user_name,
+                        password: data.password,
+                    };
+                    dataLogin = JSON.stringify(dataLogin);
+                    localStorage.setItem('dataLogin', dataLogin);
+                }
                 UserService.getUserInfo(result.id, result.name_value_list.user_id.value, function (userInfo) {
                     var data = {
                         sessionId: result.id,
@@ -30,13 +39,34 @@ app.controller('LoginCtrl', function ($scope, $cookies, $cookieStore, $ionicLoad
         });
 
     }
-    if (UserService.isLogin()) {
-        $state.go('main.menu.home');
-    }
+    if (localStorage.getItem('dataLogin') != null) {
+        debugger;
+        $ionicLoading.show({
+            templateUrl: 'templates/loading.html',
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
+        UserService.autoLogin(function(response){
+            if (response.id != null) {
+                var data = JSON.parse(localStorage.getItem('data'));
+                //rewrite session
+                data.sessionId = response.id;
+                localStorage.setItem("data", JSON.stringify(data));
+                $ionicLoading.hide();
+                $state.go('main.menu.home');
+            } else {
+                localStorage.removeItem('dataLogin');
+            }
+    });
+}
+
 });
 
 app.controller('LogoutCtrl', function ($state) {
     localStorage.removeItem('data');
+    localStorage.removeItem('dataLogin');
 })
 
 app.controller('ViewProfileCtrl', function ($scope, $ionicLoading, $ionicModal) {

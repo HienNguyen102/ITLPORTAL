@@ -1,4 +1,4 @@
-app.controller('ListQuotationCtrl', function ($scope, $ionicLoading, $stateParams, QuotationService) {
+app.controller('ListQuotationCtrl', function ($scope, $ionicLoading, $stateParams, QuotationService, $ionicFilterBar) {
     $ionicLoading.show({
         templateUrl: 'templates/loading.html',
         animation: 'fade-in',
@@ -10,10 +10,19 @@ app.controller('ListQuotationCtrl', function ($scope, $ionicLoading, $stateParam
     var userInfo = JSON.parse(localStorage.getItem('data')).userInfo;
     var accountId = JSON.parse(userInfo).id;
     QuotationService.getQuoteList(sessionId, accountId, function (result) {
-        debugger;
         $scope.quotelist = result;
         $ionicLoading.hide();
     });
+    var fbInstance;
+    $scope.showFilterBarContract = function () {
+        fbInstance = $ionicFilterBar.show({
+            items: $scope.quotelist,
+            update: function (filteredItems, filterText) {
+                $scope.quotelist = filteredItems;
+                if (filterText) {}
+            }
+        });
+    };
 });
 
 app.controller('ViewQuotationCtrl', function ($scope, $ionicLoading, $ionicModal, $stateParams, QuotationService, Language, UtilService) {
@@ -33,12 +42,11 @@ app.controller('ViewQuotationCtrl', function ($scope, $ionicLoading, $ionicModal
         var quotation = result.quotationInfo;
         UtilService.getPortList(sessionId, function (portList) {
             var portArray = portList;
-            UtilService.getPortList(sessionId, function (commodityList) {
+            UtilService.getCommodityList(sessionId, function (commodityList) {
                 var commodityArray = commodityList;
                 Language.getOptions(sessionId, 'app_list_strings', 'branch_id_dom', function (branchOptions) {
                     var branchOptions = branchOptions;
                     UtilService.getUnitList(sessionId, function (unitList) {
-                        debugger;
                         var unitArray = unitList;
                         var data = {
                             quotation: quotation,
@@ -50,14 +58,14 @@ app.controller('ViewQuotationCtrl', function ($scope, $ionicLoading, $ionicModal
                         };
                         $scope.data = data;
                         // Gửi dữ liệu báo giá sang màn hình đặt chổ
-                        //localStorage.setItem('quoteData', JSON.stringify(data));
+                        localStorage.setItem('quoteData', JSON.stringify(data));
                         $ionicLoading.hide();
                     });
                 });
             });
         });
     });
-    
+
     // Khoi tao form dat cho
     $ionicModal.fromTemplateUrl('templates/booking/editview.html', function (bookingModal) {
         $scope.bookingModal = bookingModal;
@@ -67,9 +75,8 @@ app.controller('ViewQuotationCtrl', function ($scope, $ionicLoading, $ionicModal
         focusFirstInput: true
     });
 
-    $scope.openModal = function (routeId) {
-        debugger;
-        $scope.routeId = routeId;
+    $scope.openModal = function (event) {
+        $scope.routeId = $(event.target).attr('route-id');
         $scope.bookingModal.show();
     };
     $scope.closeModal = function () {

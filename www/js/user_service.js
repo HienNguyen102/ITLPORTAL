@@ -19,7 +19,6 @@ app.service('UserService', function () {
             },
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 callback(response);
             }
         });
@@ -45,12 +44,13 @@ app.service('UserService', function () {
             }
         });
     }
-    this.isLogin = function () {
-        if(localStorage.getItem('data') != null) {
-            var sessionId = JSON.parse(localStorage.getItem('data')).sessionId;
-            if (sessionId != "") return true;
-        }
-        return false;
+    this.autoLogin = function (callback) {
+        var dataLogin = JSON.parse(localStorage.getItem('dataLogin'));
+        var username = dataLogin.username;
+        var password = dataLogin.password;
+        this.login(username, password, function(response){
+            callback(response);
+        });
     }
     this.updateProfile = function (data, callback) {
         debugger;

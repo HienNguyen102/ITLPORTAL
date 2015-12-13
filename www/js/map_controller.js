@@ -1,37 +1,8 @@
-
-app.controller('MapCtrl', function ($scope, $ionicLoading, $stateParams, $cordovaGeolocation) {
+app.controller('MapCtrl', function ($scope, $ionicLoading, $stateParams, $cordovaGeolocation, $ionicPopup, $ionicHistory) {
     console.log("mapctrl");
-    /*var options = {
-        enableHighAccuracy: true
-    };
 
-    navigator.geolocation.getCurrentPosition(function (position) {
-        var lat = position.coords.latitude
-        var long = position.coords.longitude
-        alert("lat: " + lat + " long: " + long);
-    }, function (err) {
-        alert("loi navigator geolocation");
-    }, function () {
-        alert("options");
-    });*/
-
-    var posOptions = {
-        enableHighAccuracy: false
-    };
-    $cordovaGeolocation
-        .getCurrentPosition(posOptions)
-        .then(function (position) {
-            var lat = position.coords.latitude
-            var long = position.coords.longitude
-            alert("lat: " + lat + " long: " + long);
-        }, function (err) {
-            alert("loi");
-        });
-
-
-
-    //debugger;
-    /*var address = decodeURIComponent($stateParams.address);
+    debugger;
+    var address = decodeURIComponent($stateParams.address);
     $ionicLoading.show({
         templateUrl: 'templates/loading.html',
         animation: 'fade-in',
@@ -59,9 +30,24 @@ app.controller('MapCtrl', function ($scope, $ionicLoading, $stateParams, $cordov
                 map: map,
                 position: results[0].geometry.location
             });
+            $scope.map = map;
         } else {
-            alert('Geocode was not successful for the following reason: ' + status);
+            var mapPopup = $ionicPopup.show({
+                template: 'Không thể xác định vị trí trên bản đồ',
+                title: 'Lỗi',
+                buttons: [
+                    {
+                        text: '<b>Quay lại</b>',
+                        type: 'button-positive',
+                        onTap: function (e) {
+                            $ionicHistory.goBack();
+                        }
+      },
+                    {
+                        text: 'Hủy'
+                    }
+    ]
+            });
         }
     });
-    $scope.map = map;*/
 });

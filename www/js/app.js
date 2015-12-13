@@ -206,6 +206,24 @@ app.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $
                     controller: "ViewQuotationCtrl",
                 }
             }
+        })
+        .state('main.menu.bookinglist', {
+            url: "/bookinglist",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/booking/listview.html",
+                    controller: "BookingListCtrl",
+                }
+            }
+        })
+        .state('main.menu.viewbooking', {
+            url: "/viewbooking/:id",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/booking/detailview.html",
+                    controller: "ViewBookingCtrl",
+                }
+            }
         });
 
     $urlRouterProvider.otherwise("/main/login");

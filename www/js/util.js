@@ -53,6 +53,33 @@ app.service('UtilService', function () {
         });
     };
     
+    this.getGeoCodeList = function (sessionId, callback) {
+        var geoCodeParam = {
+            session: sessionId,
+            module_name: 'C_catGeoCode',
+        };
+        geoCodeParam = JSON.stringify(geoCodeParam);
+        $.ajax({
+            type: "POST",
+            url: apiUrl,
+            data: {
+                method: "get_entry_list",
+                input_type: "JSON",
+                response_type: "JSON",
+                rest_data: geoCodeParam
+            },
+            dataType: "json",
+            success: function (response) {
+                geoCodeArray = [];
+                for (key in response.entry_list) {
+                    var geoCodeObj = response.entry_list[key];
+                    geoCodeArray[geoCodeObj.name_value_list.id.value] = geoCodeObj.name_value_list.name.value;
+                }
+                callback(geoCodeArray);
+            }
+        });
+    };
+    
     this.getUnitList = function (sessionId, callback) {
         var unitParam = {
             session: sessionId,

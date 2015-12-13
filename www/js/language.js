@@ -24,7 +24,6 @@ app.service('Language', function(){
     
     this.getOptions = function(sessionId, type, optionName, callback){
         this.getLanguage(sessionId, type, function(lang){
-            debugger;
             var lang = JSON.parse(lang);
             var options = lang[optionName];
             callback(options);

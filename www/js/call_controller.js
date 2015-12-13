@@ -62,7 +62,7 @@ app.controller('CreateCallCtrl', function ($scope, $ionicLoading, $filter, $loca
         if (typeof (val) === 'undefined') {
             console.log('No date selected');
         } else {
-            $scope.datepickerObjForCallDate.inputDate = $filter('date')(val, 'yyyy-MM-dd');;
+            $scope.datepickerObjForCallDate.inputDate = $filter('date')(val, 'yyyy-MM-dd');
             //var temp=$filter('date')($scope.datepickerObjForCallDate.inputDate, 'yyyy-MM-dd');
             //debugger;
         }

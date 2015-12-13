@@ -45,12 +45,9 @@ app.controller('CreateMeetingCtrl', function ($scope, $cookies, $cookieStore, $i
     };
     $scope.send = function (data) {
         debugger;
-        data.start_date = '31/10/2015 05:45pm' //$filter('date')($scope.datepickerObject.inputDate, "dd/MM/yyyy")+' 12:00 pm';
-            /*var sessionId = JSON.parse($cookieStore.get('data')).sessionId;
-            var userInfo = JSON.parse($cookieStore.get('data')).userInfo;
-            var accountId = JSON.parse(userInfo).id;*/
+        data.start_date = $filter('date')($scope.datepickerObject.inputDate, "yyyy-MM-dd");
         var sessionId = JSON.parse(localStorage.getItem('data')).sessionId;
-        var accountId = JSON.parse(localStorage.getItem('data')).userId;
+        var accountId = (JSON.parse(localStorage.getItem('data')).userInfo).id;
         $ionicLoading.show({
             templateUrl: 'templates/loading.html',
             animation: 'fade-in',
@@ -68,7 +65,7 @@ app.controller('CreateMeetingCtrl', function ($scope, $cookies, $cookieStore, $i
     }
 });
 // Xu ly cua controller ListMeetingCrtl
-app.controller('ListMeetingCtrl', function ($scope, $cookies, $cookieStore, $ionicSideMenuDelegate, $ionicModal, $ionicLoading, UserService, MeetingService) {
+app.controller('ListMeetingCtrl', function ($scope, $cookies, $cookieStore, $ionicSideMenuDelegate, $ionicModal, $ionicLoading, UserService, MeetingService, Language, $ionicFilterBar) {
     // Lay danh sach meeting
     //debugger;
     $ionicLoading.show({
@@ -78,17 +75,27 @@ app.controller('ListMeetingCtrl', function ($scope, $cookies, $cookieStore, $ion
         maxWidth: 200,
         showDelay: 0
     });
-    /*var sessionId = JSON.parse($cookieStore.get('data')).sessionId;
-    var userInfo = JSON.parse($cookieStore.get('data')).userInfo;
-    var accountId = JSON.parse(userInfo).id;*/
     var sessionId = JSON.parse(localStorage.getItem('data')).sessionId;
     var userInfo = JSON.parse(localStorage.getItem('data')).userInfo;
-    var accountId = JSON.parse(userInfo).id
+    var accountId = JSON.parse(userInfo).id;
     MeetingService.getMeetingList(sessionId, accountId, function (result) {
-        $scope.meetings = result.entry_list;
-        $ionicLoading.hide();
+            Language.getOptions(sessionId, 'app_list_strings', 'meeting_status_dom', function (meetingStatusOptions) {
+                $scope.meetings = result.entry_list;
+                $scope.meetingStatusOptions = meetingStatusOptions;
+                $ionicLoading.hide();
+            });
+
     });
-
-
+    var fbInstance;
+    $scope.showFilterBarContract = function () {
+        fbInstance = $ionicFilterBar.show({
+            items: $scope.meetings,
+            update: function (filteredItems, filterText) {
+                $scope.meetings = filteredItems;
+                if (filterText) {
+                }
+            }
+        });
+    };
 
 });

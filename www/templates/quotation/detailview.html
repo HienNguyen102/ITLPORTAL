@@ -1,4 +1,4 @@
-    <ion-view title="Chi tiết báo giá">
+    <ion-view title="Chi tiết báo giá" ng-controller="ViewQuotationCtrl">
             <ion-content class="padding">
                 <div class="list">
                     <div class="item item-divider">
@@ -69,7 +69,7 @@
     white-space: normal;">{{route.currency.value}}</p>
                   </label>
                 </div>
-                <button name="btnBooking" id="btnBooking" style="margin-top:7px;" class="button button-balanced" ng-click="openModal('{{route.id.value}}')">
+                <button route-id="{{route.id.value}}" name="btnBooking" id="btnBooking" style="margin-top:7px;" class="button button-balanced" ng-click="openModal($event)">
                     <i class="icon ion-ios-cart"></i>
                 </button>
             </div>

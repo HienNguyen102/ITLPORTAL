@@ -113,4 +113,7 @@ app.controller('MenuCtrl', function ($scope, $ionicSideMenuDelegate, $ionicModal
     $scope.$on('$destroy', function () {
         $scope.addCallModal.remove();
     });
+    
+    var userInfo = JSON.parse(JSON.parse(localStorage.getItem('data')).userInfo);
+    $scope.customerName = userInfo.name;
 });

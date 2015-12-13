@@ -8,11 +8,11 @@
         <div class="list">
         <label class="item item-input item-stacked-label">
             <span class="input-label">Mã đặt hàng</span>
-            <input type="text" placeholder="Mã đặt hàng" ng-model="data.truck_booking_account_code">
+            <input type="text" placeholder="Mã đặt hàng" ng-model="bookingData.truck_booking_account_code">
           </label>
         <label class="item item-input item-stacked-label">
             <span class="input-label">Số lượng</span>
-            <input type="text" placeholder="Số lượng" ng-model="data.quantity">
+            <input type="text" placeholder="Số lượng" ng-model="bookingData.quantity">
           </label>
         <label style="padding-right:15px;" class="item item-input item-stacked-label">
             <span class="input-label">Ngày đặt</span><br/>
@@ -45,7 +45,6 @@
             </ionic-datepicker>
           </label>
         </div>
-        <input hidden="routeId" ng-model="routeId">
-        <button name="btnCreateBooking" id="btnCreateBooking" class="button button-full icon-right ion-arrow-right-c button-balanced" ng-click="">Đặt chổ</button>
+        <button name="btnCreateBooking" id="btnCreateBooking" class="button button-full icon-right ion-arrow-right-c button-balanced" ng-click="sendBooking(bookingData)">Đặt chổ</button>
       </ion-content>
 </div>
