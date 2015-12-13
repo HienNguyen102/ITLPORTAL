@@ -13,7 +13,7 @@
                 <i class="icon ion-ios-telephone" style="color:#3EBA2E" ></i>Danh sách cuộc gọi
             </div>
             <ion-item class="item item-icon-right" href="#/main/menu/view_call/{{call.id}}" collection-repeat="call in callList">
-                <h2>{{$index}}:{{call.name_value_list.name.value}}</h2>
+                <h2>{{call.name_value_list.name.value}}</h2>
                 <p>Ngày tạo : {{call.name_value_list.date_entered.value | moment: 'format': 'DD/MM/YYYY h:mm:ss a'}}</p>
                 <p>Trạng thái : {{call.name_value_list.status.value}}</p>
                 <i class="icon ion-chevron-right icon-accessory"></i>

@@ -9,7 +9,7 @@
                 <i class="icon ion-ios-briefcase" style="color:#0F5BA6"></i>Danh sách hợp đồng
             </div>
             <ion-item class="item item-icon-right" href="#/main/menu/view_contract/{{contract.id}}" collection-repeat="contract in contractList">
-                <h2>{{$index}}:{{contract.name_value_list.name.value}}</h2>
+                <h2>{{contract.name_value_list.name.value}}</h2>
                 <p>Ngày tạo : {{contract.name_value_list.date_entered.value | moment: 'format': 'DD/MM/YYYY h:mm:ss a'}}</p>
                 <p>Trạng thái : {{contract.name_value_list.status.value}}</p>
                 <i class="icon ion-chevron-right icon-accessory"></i>
