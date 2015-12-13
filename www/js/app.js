@@ -28,7 +28,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $
             views: {
                 'mainContent': {
                     templateUrl: "templates/user/login.html",
-                    controller:'LoginCtrl'
+                    controller: 'LoginCtrl'
                 }
             }
         })
@@ -207,21 +207,12 @@ app.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $
                 }
             }
         })
-        .state('main.menu.bookinglist', {
-            url: "/bookinglist",
+        .state('main.menu.map', {
+            url: "/map",
             views: {
                 'menuContent': {
-                    templateUrl: "templates/booking/listview.html",
-                    controller: "BookingListCtrl",
-                }
-            }
-        })
-        .state('main.menu.viewbooking', {
-            url: "/viewbooking/:id",
-            views: {
-                'menuContent': {
-                    templateUrl: "templates/booking/detailview.html",
-                    controller: "ViewBookingCtrl",
+                    templateUrl: "templates/map/map.html",
+                    controller: "MapMenuCtrl"
                 }
             }
         });
