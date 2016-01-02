@@ -1,74 +1,98 @@
 {
-    "cordova-plugin-splashscreen": {
-        "source": {
-            "type": "local",
-            "path": "C:\\Users\\HienNguyen\\AppData\\Local\\Intel\\XDK\\xdk\\components\\server\\cordova-plugins\\cordova-plugin-splashscreen"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-statusbar": {
         "source": {
             "type": "local",
-            "path": "C:\\Users\\HienNguyen\\AppData\\Local\\Intel\\XDK\\xdk\\components\\server\\cordova-plugins\\cordova-plugin-statusbar"
+            "path": "C:\\Users\\11520_000\\AppData\\Local\\Intel\\XDK\\xdk\\components\\server\\cordova-plugins\\cordova-plugin-statusbar"
         },
         "is_top_level": true,
         "variables": {}
     },
-    "org.apache.cordova.camera": {
+    "cordova-plugin-device": {
         "source": {
-            "type": "registry",
-            "id": "org.apache.cordova.camera@latest"
+            "type": "local",
+            "path": "C:\\Users\\11520_000\\AppData\\Local\\Intel\\XDK\\xdk\\components\\server\\cordova-plugins\\cordova-plugin-device"
         },
         "is_top_level": true,
         "variables": {}
     },
-    "org.apache.cordova.console": {
+    "cordova-plugin-file": {
         "source": {
-            "type": "registry",
-            "id": "org.apache.cordova.console@latest"
+            "type": "local",
+            "path": "C:\\Users\\HienNguyen\\AppData\\Local\\Intel\\XDK\\xdk\\components\\server\\cordova-plugins\\cordova-plugin-file"
         },
         "is_top_level": true,
         "variables": {}
     },
-    "org.apache.cordova.device": {
+    "cordova-plugin-geolocation": {
         "source": {
-            "type": "registry",
-            "id": "org.apache.cordova.device@latest"
+            "type": "local",
+            "path": "C:\\Users\\HienNguyen\\AppData\\Local\\Intel\\XDK\\xdk\\components\\server\\cordova-plugins\\cordova-plugin-geolocation"
         },
         "is_top_level": true,
         "variables": {}
     },
-    "org.apache.cordova.media-capture": {
+    "cordova-plugin-media-capture": {
         "source": {
-            "type": "registry",
-            "id": "org.apache.cordova.media-capture@latest"
+            "type": "local",
+            "path": "C:\\Users\\HienNguyen\\AppData\\Local\\Intel\\XDK\\xdk\\components\\server\\cordova-plugins\\cordova-plugin-media-capture"
         },
         "is_top_level": true,
         "variables": {}
     },
-    "org.apache.cordova.file": {
+    "cordova-plugin-camera": {
+        "source": {
+            "type": "local",
+            "path": "C:\\Users\\HienNguyen\\AppData\\Local\\Intel\\XDK\\xdk\\components\\server\\cordova-plugins\\cordova-plugin-camera"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "com.onesignal.plugins.OneSignal": {
+        "source": {
+            "type": "local",
+            "path": "D:\\HybridSorce\\OneSignalDemo\\plugins\\com.onesignal.plugins.OneSignal"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "android.support.v4": {
         "source": {
             "type": "registry",
-            "id": "org.apache.cordova.file"
+            "id": "android.support.v4"
         },
         "is_top_level": false,
         "variables": {}
     },
-    "org.apache.cordova.media": {
+    "com.google.playservices": {
         "source": {
             "type": "registry",
-            "id": "org.apache.cordova.media@latest"
+            "id": "com.google.playservices"
+        },
+        "is_top_level": false,
+        "variables": {}
+    },
+    "cordova-plugin-media": {
+        "source": {
+            "type": "local",
+            "path": "C:\\Users\\HienNguyen\\AppData\\Local\\Intel\\XDK\\xdk\\components\\server\\cordova-plugins\\cordova-plugin-media"
         },
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-dialogs": {
+    "pushbots-cordova-plugin": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-dialogs@latest"
+            "id": " pushbots-cordova-plugin@latest"
         },
         "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-android-support-v4": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-android-support-v4"
+        },
+        "is_top_level": false,
         "variables": {}
     }
 }

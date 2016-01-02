@@ -7,17 +7,15 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-geolocation": {},
-        "org.apache.cordova.camera": {},
-        "org.apache.cordova.device": {},
-        "org.apache.cordova.console": {},
         "cordova-plugin-statusbar": {},
-        "cordova-plugin-splashscreen": {},
-        "org.apache.cordova.media-capture": {},
-        "org.apache.cordova.media": {},
-        "cordova-plugin-dialogs": {}
+        "cordova-plugin-device": {},
+        "cordova-plugin-file": {},
+        "cordova-plugin-geolocation": {},
+        "cordova-plugin-media-capture": {},
+        "cordova-plugin-camera": {},
+        "com.onesignal.plugins.OneSignal": {},
+        "cordova-plugin-media": {},
+        "pushbots-cordova-plugin": {}
     },
-    "dependent_plugins": {
-        "org.apache.cordova.file": {}
-    }
+    "dependent_plugins": {}
 }
