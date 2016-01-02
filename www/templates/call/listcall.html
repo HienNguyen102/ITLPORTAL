@@ -15,7 +15,7 @@
             <ion-item class="item item-icon-right" href="#/main/menu/view_call/{{call.id}}" collection-repeat="call in callList">
                 <h2>{{call.name_value_list.name.value}}</h2>
                 <p>Ngày tạo : {{call.name_value_list.date_entered.value | moment: 'format': 'DD/MM/YYYY h:mm:ss a'}}</p>
-                <p>Trạng thái : {{call.name_value_list.status.value}}</p>
+                <p>Trạng thái : {{callStatusOptions[call.name_value_list.status.value]}}</p>
                 <i class="icon ion-chevron-right icon-accessory"></i>
         </ion-list>
     </ion-content>

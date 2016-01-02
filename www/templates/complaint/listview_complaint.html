@@ -11,7 +11,9 @@
             <ion-item class="item item-icon-right" href="#/main/menu/view_complaint/{{complaint.name_value_list.id.value}}" collection-repeat="complaint in complaints">
                 <h2>{{complaint.name_value_list.name.value}}</h2>
                 <p>Ngày tạo : {{complaint.name_value_list.date_entered.value | moment: 'format': 'DD/MM/YYYY h:mm:ss a'}}</p>
-                <p>Trạng thái : {{complaint.name_value_list.status.value}}</p>
+                <!--<p>Trạng thái : {{complaint.name_value_list.status.value}}</p>-->
+                <p ng-if="complaint.name_value_list.status.value == 'New'">Trạng thái : Mới</p>
+                <p ng-if="complaint.name_value_list.status.value == 'Closed'">Trạng thái : Đóng</p>
                 <i class="icon ion-chevron-right icon-accessory"></i>
                 <!--</div>-->
         </ion-list>
