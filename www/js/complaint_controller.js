@@ -100,9 +100,10 @@ app.controller('RecordCtrl', function ($scope, Sounds, $state, $ionicHistory) {
             });
     }
 
-    $scope.play = function () {
+    $scope.playInRecordCtrl = function () {
+        console.log("choi trong record ctrl");
         if (!$scope.sound.file) {
-            navigator.notification.alert("Record a sound first.", null, "Error");
+            navigator.notification.alert("Hãy thực hiện ghi âm trước.", null, "Lỗi");
             return;
         }
         var media = new Media($scope.sound.file, function (e) {
@@ -113,7 +114,7 @@ app.controller('RecordCtrl', function ($scope, Sounds, $state, $ionicHistory) {
         media.play();
     }
 });
-app.controller('ListComplaintCtrl', function ($scope, $cookies, $cookieStore, $ionicSideMenuDelegate, $ionicModal, $ionicLoading, UserService, ComplaintService, $ionicFilterBar) {
+app.controller('ListComplaintCtrl', function ($scope, $cookies, $cookieStore, $ionicSideMenuDelegate, $ionicModal, $ionicLoading, UserService, ComplaintService, $ionicFilterBar, Language) {
 
     /*$ionicModal.fromTemplateUrl('templates/complaint/editview.html', function (meetingModal) {
         $scope.meetingModal = meetingModal;
@@ -134,6 +135,11 @@ app.controller('ListComplaintCtrl', function ($scope, $cookies, $cookieStore, $i
     var userId = JSON.parse(localStorage.getItem('data')).userId;
     ComplaintService.getComplaintList(sessionId, userId, function (result) {
         //debugger;
+        //$scope.complaints = result.entry_list;
+        //sap xep ket qua
+        result.entry_list.sort(function (a, b) {
+                return new Date(b.name_value_list.date_entered.value).getTime() - new Date(a.name_value_list.date_entered.value).getTime()
+            });
         $scope.complaints = result.entry_list;
         $ionicLoading.hide();
     });
@@ -146,7 +152,8 @@ app.controller('ListComplaintCtrl', function ($scope, $cookies, $cookieStore, $i
                 if (filterText) {
                     console.log(filterText);
                 }
-            }
+            },
+             cancelText: "Hủy bỏ"
         });
     };
 
@@ -286,7 +293,7 @@ app.controller('ViewComplaintCtrl', function ($scope, $cookies, $ionicLoading, $
     });
 
     $scope.play = function (x) {
-        console.log('play', x);
+        console.log("choi khi bam");
         Sounds.play(x);
     };
 
@@ -367,7 +374,7 @@ app.controller('ViewAttachmentCtrl', function ($scope, $cookies, $cookieStore, $
                     var df = document.createDocumentFragment();
                     return function Sound(src) {
                         var snd = new Audio(src);
-                        df.appendChild(snd); // keep in fragment until finished playing
+                        df.appendChild(snd); // keep in fragment until finished
                         snd.addEventListener('ended', function () {
                             df.removeChild(snd);
                         });

@@ -33,10 +33,11 @@
                     <p class="item">{{commodity}}</p>
                 </div>
             <div class="list">
-            <div class="item item-icon-left">
+            <div class="item item-icon-left item-icon-right" ng-click="clickToShow()">
                 <i class="icon ion-arrow-graph-up-right" style="color:#007AFF"></i>Danh sách tuyến
+                <i class="icon ion-ios-arrow-{{iconToggle}}" style="color:#007AFF"></i>
             </div>
-            <div class="item item-button-right" collection-repeat="route in data.routeList" href="#">
+            <div class="item item-button-right" collection-repeat="route in data.routeList" href="#" ng-show="toShow">
                 <div class="list">
                   <label class="item item-input item-stacked-label">
                     <span class="input-label">Nơi đi</span>

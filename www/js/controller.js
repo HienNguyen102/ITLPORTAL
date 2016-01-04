@@ -65,7 +65,7 @@ app.controller('AppCtrl', function ($scope, $cordovaCamera, $cordovaCapture, $co
 app.controller('HomeCtrl', function ($scope) {});
 app.controller('MainCtrl', function ($scope) {});
 
-app.controller('MenuCtrl', function ($scope, $ionicSideMenuDelegate, $ionicModal, $location, $ionicPopover) {
+app.controller('MenuCtrl', function ($scope, $ionicSideMenuDelegate, $ionicModal, $location, $ionicPopover, $ionicPopup, $ionicLoading, $state, UserService) {
     //Khoi tao form tao meeting
     $ionicModal.fromTemplateUrl('templates/meeting/editview.html', function (meetingModal) {
         $scope.meetingModal = meetingModal;
@@ -113,7 +113,75 @@ app.controller('MenuCtrl', function ($scope, $ionicSideMenuDelegate, $ionicModal
     $scope.$on('$destroy', function () {
         $scope.addCallModal.remove();
     });
-    
+
     var userInfo = JSON.parse(JSON.parse(localStorage.getItem('data')).userInfo);
     $scope.customerName = userInfo.name;
+
+    // Tao toggle de thu gon giao dien
+    $scope.toShow = false;
+    $scope.iconToggle = 'down';
+    $scope.clickToShow = function () {
+        if ($scope.toShow) {
+            $scope.iconToggle = 'down';
+            $scope.toShow = false;
+        } else {
+            $scope.iconToggle = 'up';
+            $scope.toShow = true;
+        }
+    }
+
+
+    // Khởi tạo form đổi mật khẩu
+    $scope.showPopupChangePassword = function () {
+        // An elaborate, custom popup
+        $scope.passwordinfo = {};
+        var popUpChangePassword = $ionicPopup.show({
+            templateUrl: 'templates/user/changepassword.html',
+            title: 'Đổi mật khẩu',
+            scope: $scope,
+            buttons: [
+                {
+                    text: '<b>Lưu lại</b>',
+                    type: 'button-positive',
+                    onTap: function (e) {
+                        if (!$scope.passwordinfo.old_password || !$scope.passwordinfo.new_password || $scope.passwordinfo.new_password != $scope.passwordinfo.confirm_new_password) {
+                            //don't allow the user to close unless he enters wifi password
+                            e.preventDefault();
+                        } else {
+                            this.close();
+                            $ionicLoading.show({
+                                templateUrl: 'templates/loading.html',
+                                animation: 'fade-in',
+                                showBackdrop: true,
+                                maxWidth: 200,
+                                showDelay: 0
+                            });
+                            UserService.changePassword($scope.passwordinfo, function (result) {
+                                $ionicLoading.hide();
+                                if (result == 'invalid') {
+                                    var alertPopup = $ionicPopup.alert({
+                                        title: 'Thông báo',
+                                        template: 'Mẫu khẩu cũ không đúng'
+                                    });
+                                } else {
+                                    var alertPopup = $ionicPopup.alert({
+                                        title: 'Thông báo',
+                                        template: 'Đổi mật khẩu thành công'
+                                    });
+                                    alertPopup.then(function (res) {
+                                       $state.go('main.logout');
+                                    });
+                                }
+                            });
+                        }
+                    }
+      },
+                {
+                    text: 'Hủy bỏ'
+                }
+    ]
+        });
+
+    };
+
 });

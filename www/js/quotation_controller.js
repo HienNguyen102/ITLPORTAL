@@ -10,17 +10,20 @@ app.controller('ListQuotationCtrl', function ($scope, $ionicLoading, $stateParam
     var userInfo = JSON.parse(localStorage.getItem('data')).userInfo;
     var accountId = JSON.parse(userInfo).id;
     QuotationService.getQuoteList(sessionId, accountId, function (result) {
-        $scope.quotelist = result;
+        $scope.quotelist = result.sort(function (a, b) {
+                return new Date(b.quotation_date).getTime() - new Date(a.quotation_date).getTime()
+            });
         $ionicLoading.hide();
     });
     var fbInstance;
-    $scope.showFilterBarContract = function () {
+    $scope.showFilterBarQuotation = function () {
         fbInstance = $ionicFilterBar.show({
             items: $scope.quotelist,
             update: function (filteredItems, filterText) {
                 $scope.quotelist = filteredItems;
                 if (filterText) {}
-            }
+            },
+            cancelText: "Hủy bỏ"
         });
     };
 });
@@ -94,4 +97,5 @@ app.controller('ViewQuotationCtrl', function ($scope, $ionicLoading, $ionicModal
     $scope.$on('bookingModal.removed', function () {
         // Execute action
     });
+
 });

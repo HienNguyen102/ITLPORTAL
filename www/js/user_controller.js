@@ -10,12 +10,13 @@ app.controller('LoginCtrl', function ($scope, $cookies, $cookieStore, $ionicLoad
         var sessionId = "";
         UserService.login(data.user_name, data.password, function (result) {
             $ionicLoading.hide();
-            debugger;
+                debugger;
+            var userName = data.user_name;
             if (result.id != null) {
                 if (data.isChecked) {
                     // Save login info to use
                     var dataLogin = {
-                        username: data.user_name,
+                        username: userName,
                         password: data.password,
                     };
                     dataLogin = JSON.stringify(dataLogin);
@@ -25,10 +26,12 @@ app.controller('LoginCtrl', function ($scope, $cookies, $cookieStore, $ionicLoad
                     var data = {
                         sessionId: result.id,
                         userId: result.name_value_list.user_id.value,
-                        userInfo: userInfo
+                        userInfo: userInfo,
+                        user_name: userName,
                     };
                     localStorage.setItem("data", JSON.stringify(data));
-                    $state.go('main.menu.home');
+                    UserService.sendUserIdForPushNoti();
+                    $state.go('main.menu.quotations');
                 });
             } else {
                 $ionicPopup.alert({
@@ -40,7 +43,6 @@ app.controller('LoginCtrl', function ($scope, $cookies, $cookieStore, $ionicLoad
 
     }
     if (localStorage.getItem('dataLogin') != null) {
-        debugger;
         $ionicLoading.show({
             templateUrl: 'templates/loading.html',
             animation: 'fade-in',
@@ -55,7 +57,7 @@ app.controller('LoginCtrl', function ($scope, $cookies, $cookieStore, $ionicLoad
                 data.sessionId = response.id;
                 localStorage.setItem("data", JSON.stringify(data));
                 $ionicLoading.hide();
-                $state.go('main.menu.home');
+                $state.go('main.menu.quotations');
             } else {
                 localStorage.removeItem('dataLogin');
             }

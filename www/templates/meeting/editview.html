@@ -16,7 +16,7 @@
                 <button class="button button-block button-light icon-right icon ion-calendar" style="text-align:left; font-size:11px; padding-left:15px;">{{datepickerObject.inputDate | date: 'dd/MM/yyyy'}}</button>
             </ionic-datepicker>
             <label class="item item-input">
-                <input type="text" placeholder="Địa điểm" g-places-autocomplete ng-model="meeting.location">
+                <input type="text" placeholder="Địa điểm" ng-model="meeting.location">
             </label>
         </div>
         <button class="button icon icon-right ion-arrow-right-c button-balanced button-block" ng-click="send(meeting)">Gửi</button>

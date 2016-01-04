@@ -47,6 +47,7 @@
     <script src="js/filter.js"></script>
     <script src="js/language.js"></script>
     <script src="js/util.js"></script>
+    <script src="lib/jquery.md5.js"></script>
     
     <script src="js/user_service.js"></script>
     <script src="js/record_service.js"></script> 
@@ -56,6 +57,9 @@
     <script src="js/contract_service.js"></script>
     <script src="js/quotation_service.js"></script>
     <script src="js/booking_service.js"></script>
+    <script src="js/contact_service.js"></script>
+    <script src="js/about_service.js"></script>
+    
     
     <script src="js/controller.js"></script>
     <script src="js/user_controller.js"></script>
@@ -66,7 +70,8 @@
     <script src="js/call_controller.js"></script>
     <script src="js/contract_controller.js"></script>
     <script src="js/map_controller.js"></script>
-    
+    <script src="js/contact_controller.js"></script>
+    <script src="js/about_controller.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MpqUqegaf1pZ0ctiNw9Trcj4KqOJnyk&sensor=true"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
     <script type="text/javascript">
@@ -85,7 +90,7 @@
             // Show an alert box if a notification comes in when the user is in your app.
             window.plugins.OneSignal.getIds(function (ids) {
                 localStorage.setItem("userIdForPushNoti", ids.userId);
-                alert(localStorage.getItem("userIdForPushNoti"));
+                //alert(localStorage.getItem("userIdForPushNoti"));
             });
             //localStorage.setItem("userIdForPushNoti", "test 2");
             /*var Pushbots = PushbotsPlugin.initialize("55b3a03d1779591f3c8b4569", {"android":{"sender_id":"974837693249"}});

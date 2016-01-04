@@ -10,7 +10,7 @@ app.controller('MapCtrl', function ($scope, $ionicLoading, $stateParams, $cordov
         maxWidth: 200,
         showDelay: 0
     });
-    var myLatlng = new google.maps.LatLng(43.07493, -89.381388);
+    var myLatlng = new google.maps.LatLng(10.800702, 106.686069);
     var mapOptions = {
         center: myLatlng,
         zoom: 16,

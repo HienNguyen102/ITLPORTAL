@@ -1,5 +1,5 @@
-//var apiUrl = "http://localhost:8082/ITL/Trucking/custom/service/v4_1/rest.php";
-var apiUrl = "http://trucking.giaiphapcrm.info/custom/service/v4_1/rest.php";
+var apiUrl = "http://nhatintership.giaiphapcrm.vn/custom/service/v4_1/rest.php";
+//var apiUrl = "http://trucking.giaiphapcrm.info/custom/service/v4_1/rest.php";
 var rootUser = 'web_service_admin';
 var rootPass = '^BQ^d.ndAG96gDY';
 var app = angular.module('ionicApp', ['ionic', 'ngCookies', 'google.places', 'ionic-datepicker', 'ngCordova', 'Recordservices', 'jett.ionic.filter.bar']);
@@ -29,6 +29,15 @@ app.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $
                 'mainContent': {
                     templateUrl: "templates/user/login.html",
                     controller: 'LoginCtrl'
+                }
+            }
+        })
+        .state('main.logout', {
+            url: "/logout",
+            views: {
+                'mainContent': {
+                    templateUrl: "templates/user/login.html",
+                    controller:'LogoutCtrl'
                 }
             }
         })
@@ -215,7 +224,43 @@ app.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider, $
                     controller: "MapMenuCtrl"
                 }
             }
+        })
+        .state('main.menu.contactlist', {
+            url: "/contactlist",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/contact.html",
+                    controller: "ContactListController",
+                }
+            }
+        })
+        .state('main.menu.about', {
+            url: "/about",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/about.html",
+                    controller: "AboutController",
+                }
+            }
+        })
+        .state('main.menu.bookinglist', {
+            url: "/bookinglist",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/booking/listview.html",
+                    controller: "BookingListCtrl"
+                }     }
+    })
+    .state('main.menu.viewbooking', {
+            url: "/viewbooking/:id",
+            views: {
+                'menuContent': {
+                    templateUrl: "templates/booking/detailview.html",
+                    controller: "ViewBookingCtrl",
+                }
+            }
         });
+
 
     $urlRouterProvider.otherwise("/main/login");
 

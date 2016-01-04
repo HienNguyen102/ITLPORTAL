@@ -1,7 +1,7 @@
 
-    <ion-view title="Cuộc họp">
+    <ion-view cache-view="false" title="Cuộc họp">
     <ion-nav-buttons side="right">
-        <button class="button button-icon icon icon ion-ios-search-strong" ng-click="showFilterBarContract()">
+        <button class="button button-icon icon icon ion-ios-search-strong" ng-click="showFilterBarMeeting()">
         </button>
     </ion-nav-buttons>
         <ion-nav-buttons side="secondary">
@@ -18,7 +18,7 @@
             <p>Trạng thái : {{meetingStatusOptions[meeting.name_value_list.status.value]}}</p>
             <i class="icon ion-chevron-right icon-accessory"></i>
 
-        </div>         
+        </ion-item>         
 
         </ion-list>
       </ion-content>

@@ -1,15 +1,26 @@
-    <ion-view view-title="About">
+<ion-view view-title="Thông tin">
 
-      <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-email"></button>
-      </ion-nav-buttons>
-      
-      <ion-content class="padding">
+    <ion-content class="padding">
         <div class="card">
-          <div class="item">
-            <h3>Ionic Framework Kitchen Sink</h3>
-            <p>by <a href="http://twitter.com/krisrak" target="_blank">@krisrak</a></p>
-          </div>    
+            <div class="item item-divider">
+                Thông tin ứng dụng
+            </div>
+            <div class="item item-text-wrap">
+                {{aboutInfo.name_value_list.app_info.value}}
+            </div>
+            <div class="item item-divider">
+                Tác giả
+            </div>
+            <div class="item item-text-wrap">
+                {{aboutInfo.name_value_list.author1.value}} <br/>
+                {{aboutInfo.name_value_list.author2.value}}
+            </div>
+            <div class="item item-divider">
+                Liên hệ
+            </div>
+            <div class="item item-text-wrap">
+                {{aboutInfo.name_value_list.contact_info.value}}
+            </div>
         </div>
-      </ion-content>
-    </ion-view>
+    </ion-content>
+</ion-view>

@@ -79,7 +79,7 @@ app.service('CallService', function () {
         var sessionId = JSON.parse(localStorage.getItem('data')).sessionId;
         var userInfo = JSON.parse(localStorage.getItem('data')).userInfo;
         var accountId = JSON.parse(userInfo).id;
-
+        var assingedUserId = JSON.parse(JSON.parse(localStorage.getItem('data')).userInfo).assigned_user_id;
         var createCallParams = {
             session: sessionId,
             module_name: "Calls",
@@ -103,10 +103,13 @@ app.service('CallService', function () {
                 {
                     name: "parent_type",
                     value: "Accounts"
+                },
+                {
+                    name: "assigned_user_id",
+                    value: assingedUserId
                 }
             ]
         }
-        //debugger;
         createCallParams = JSON.stringify(createCallParams);
         $.ajax({
             type: "POST",

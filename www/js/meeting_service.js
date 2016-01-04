@@ -79,7 +79,6 @@ app.service('MeetingService', function(){
     }
     
     this.sendMeeting = function(sessionId, accountId, meetingData, callback) {
-        debugger;
         var meetingParams = {
             session: sessionId,
             module_name: "Meetings",
@@ -88,12 +87,12 @@ app.service('MeetingService', function(){
                 { name: "description", value: meetingData.content },
                 { name: "date_start", value: meetingData.start_date },
                 { name: "date_end", value: meetingData.start_date },
-                { name: "location", value: meetingData.location.formatted_address },
+                { name: "location", value: meetingData.location},
                 { name: "parent_id", value: accountId },
-                { name: "parent_type", value: "Accounts" }
+                { name: "parent_type", value: "Accounts" },
+                { name: "assigned_user_id", value: meetingData.assigned_user_id}
             ]
         }
-        debugger;
         meetingParams = JSON.stringify(meetingParams);
         $.ajax({
             type: "POST",

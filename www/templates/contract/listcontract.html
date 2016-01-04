@@ -11,7 +11,7 @@
             <ion-item class="item item-icon-right" href="#/main/menu/view_contract/{{contract.id}}" collection-repeat="contract in contractList">
                 <h2>{{contract.name_value_list.name.value}}</h2>
                 <p>Ngày tạo : {{contract.name_value_list.date_entered.value | moment: 'format': 'DD/MM/YYYY h:mm:ss a'}}</p>
-                <p>Trạng thái : {{contract.name_value_list.status.value}}</p>
+                <p>Trạng thái : {{contractOptions[contract.name_value_list.status.value]}}</p>
                 <i class="icon ion-chevron-right icon-accessory"></i>
         </ion-list>
     </ion-content>

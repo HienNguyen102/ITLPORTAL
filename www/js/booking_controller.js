@@ -1,4 +1,4 @@
-app.controller('CreateBookingCtrl', function ($scope, $filter, $ionicLoading, UtilService, BookingService) {
+app.controller('CreateBookingCtrl', function ($scope, $filter, $ionicLoading, $location, UtilService, BookingService) {
     // Set datetimepicker for booking date
     $scope.bookingDateObject = {
         titleLabel: 'Chọn ngày', //Optional
@@ -189,6 +189,8 @@ app.controller('CreateBookingCtrl', function ($scope, $filter, $ionicLoading, Ut
         });
         BookingService.createBooking(sessionId, bookingParams, function (bookingId) {
             $ionicLoading.hide();
+            $scope.bookingModal.hide();
+            $location.path('main/menu/viewbooking/' + bookingId);
         });
     }
 });
@@ -207,20 +209,22 @@ app.controller('BookingListCtrl', function ($scope, $ionicLoading, Language, Boo
     BookingService.getBookingList(sessionId, accountId, function (bookingList) {
         $scope.bookinglist = bookingList;
         Language.getOptions(sessionId, 'app_list_strings', 'booking_status_option', function (bookingStatusOptions) {
-            $scope.bookinglist = bookingList;
+            $scope.bookinglist = bookingList.sort(function (a, b) {
+                return new Date(b.booking_date).getTime() - new Date(a.booking_date).getTime()
+            });
             $scope.bookingStatusOptions = bookingStatusOptions;
             $ionicLoading.hide();
         })
     });
     var fbInstance;
-    $scope.showFilterBarContract = function () {
+    $scope.showFilterBarBooking = function () {
         fbInstance = $ionicFilterBar.show({
             items: $scope.bookinglist,
             update: function (filteredItems, filterText) {
                 $scope.bookinglist = filteredItems;
-                if (filterText) {
-                }
-            }
+                if (filterText) {}
+            },
+            cancelText: "Hủy bỏ"
         });
     };
 });
@@ -236,17 +240,19 @@ app.controller('ViewBookingCtrl', function ($scope, $ionicLoading, $stateParams,
         showDelay: 0
     });
     BookingService.getBookingById(sessionId, bookingId, function (bookingData) {
-        $ionicLoading.hide();
         UtilService.getPortList(sessionId, function (portList) {
             UtilService.getGeoCodeList(sessionId, function (GeoCodeList) {
                 UtilService.getCommodityList(sessionId, function (commodityList) {
                     Language.getOptions(sessionId, 'app_list_strings', 'booking_status_option', function (bookingStatusOptions) {
-                        $scope.bookingInfo = bookingData.bookingInfo;
-                        $scope.geoCodeArray = GeoCodeList;
-                        $scope.commodityArray = commodityList;
-                        $scope.portArray = portList;
-                        $scope.shipmentLines = bookingData.detailInfo;
-                        $scope.bookingStatusOptions = bookingStatusOptions;
+                        var dataBooking = {
+                            bookingInfo: bookingData.bookingInfo,
+                            geoCodeArray: GeoCodeList,
+                            commodityArray: commodityList,
+                            portArray: portList,
+                            shipmentLines: bookingData.detailInfo,
+                            bookingStatusOptions: bookingStatusOptions,
+                        };
+                        $scope.dataBooking = dataBooking;
                         $ionicLoading.hide();
                     });
                 });

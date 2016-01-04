@@ -43,11 +43,12 @@ app.controller('CreateMeetingCtrl', function ($scope, $cookies, $cookieStore, $i
             $scope.datepickerObject.inputDate = val;
         }
     };
+
     $scope.send = function (data) {
-        debugger;
         data.start_date = $filter('date')($scope.datepickerObject.inputDate, "yyyy-MM-dd");
         var sessionId = JSON.parse(localStorage.getItem('data')).sessionId;
-        var accountId = (JSON.parse(localStorage.getItem('data')).userInfo).id;
+        var accountId = JSON.parse(JSON.parse(localStorage.getItem('data')).userInfo).id;
+        data.assigned_user_id = JSON.parse(JSON.parse(localStorage.getItem('data')).userInfo).assigned_user_id;
         $ionicLoading.show({
             templateUrl: 'templates/loading.html',
             animation: 'fade-in',
@@ -67,7 +68,6 @@ app.controller('CreateMeetingCtrl', function ($scope, $cookies, $cookieStore, $i
 // Xu ly cua controller ListMeetingCrtl
 app.controller('ListMeetingCtrl', function ($scope, $cookies, $cookieStore, $ionicSideMenuDelegate, $ionicModal, $ionicLoading, UserService, MeetingService, Language, $ionicFilterBar) {
     // Lay danh sach meeting
-    //debugger;
     $ionicLoading.show({
         templateUrl: 'templates/loading.html',
         animation: 'fade-in',
@@ -79,22 +79,24 @@ app.controller('ListMeetingCtrl', function ($scope, $cookies, $cookieStore, $ion
     var userInfo = JSON.parse(localStorage.getItem('data')).userInfo;
     var accountId = JSON.parse(userInfo).id;
     MeetingService.getMeetingList(sessionId, accountId, function (result) {
-            Language.getOptions(sessionId, 'app_list_strings', 'meeting_status_dom', function (meetingStatusOptions) {
-                $scope.meetings = result.entry_list;
-                $scope.meetingStatusOptions = meetingStatusOptions;
-                $ionicLoading.hide();
+        Language.getOptions(sessionId, 'app_list_strings', 'meeting_status_dom', function (meetingStatusOptions) {
+            $scope.meetings = result.entry_list.sort(function (a, b) {
+                return new Date(b.name_value_list.date_entered.value).getTime() - new Date(a.name_value_list.date_entered.value).getTime()
             });
+            $scope.meetingStatusOptions = meetingStatusOptions;
+            $ionicLoading.hide();
+        });
 
     });
     var fbInstance;
-    $scope.showFilterBarContract = function () {
+    $scope.showFilterBarMeeting = function () {
         fbInstance = $ionicFilterBar.show({
             items: $scope.meetings,
             update: function (filteredItems, filterText) {
                 $scope.meetings = filteredItems;
-                if (filterText) {
-                }
-            }
+                if (filterText) {}
+            },
+            cancelText: "Hủy bỏ"
         });
     };
 

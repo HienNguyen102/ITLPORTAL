@@ -63,6 +63,7 @@ app.service('ComplaintService', function () {
             },
             dataType: "json",
             success: function (response) {
+                console.log(response);
                 callback(response.entry_list[0].name_value_list, response.relationship_list);
                 //debugger;
             }

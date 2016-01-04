@@ -1,4 +1,4 @@
-app.controller('ListCallCtrl', function ($scope, $ionicLoading, UserService, CallService, $ionicFilterBar) {
+app.controller('ListCallCtrl', function ($scope, $ionicLoading, UserService, CallService, $ionicFilterBar, Language) {
     $ionicLoading.show({
         templateUrl: 'templates/loading.html',
         animation: 'fade-in',
@@ -7,8 +7,13 @@ app.controller('ListCallCtrl', function ($scope, $ionicLoading, UserService, Cal
         showDelay: 0
     });
     CallService.getCallList(function (result) {
-        $scope.callList = result.entry_list;
-        $ionicLoading.hide();
+        /*$scope.callList = result.entry_list;
+        $ionicLoading.hide();*/
+         Language.getOptions(JSON.parse(localStorage.getItem('data')).sessionId, 'app_list_strings', 'call_status_dom', function (callStatusOptions) {
+            $scope.callList = result.entry_list;
+            $scope.callStatusOptions = callStatusOptions;
+            $ionicLoading.hide();
+        });
     });
     var fbInstance;
     $scope.showFilterBarCall = function () {
@@ -19,11 +24,12 @@ app.controller('ListCallCtrl', function ($scope, $ionicLoading, UserService, Cal
                 if (filterText) {
                     //console.log(filterText);
                 }
-            }
+            },
+            cancelText: "Hủy bỏ"
         });
     };
 });
-app.controller('ViewCallCtrl', function ($scope, CallService, $stateParams, $ionicLoading) {
+app.controller('ViewCallCtrl', function ($scope, CallService, $stateParams, $ionicLoading, Language) {
     $ionicLoading.show({
         templateUrl: 'templates/loading.html',
         animation: 'fade-in',
@@ -32,8 +38,11 @@ app.controller('ViewCallCtrl', function ($scope, CallService, $stateParams, $ion
         showDelay: 0
     });
     CallService.getCallById($stateParams.id, function (result) {
-        $ionicLoading.hide();
-        $scope.call = result;
+        Language.getOptions(JSON.parse(localStorage.getItem('data')).sessionId, 'app_list_strings', 'call_status_dom', function (callStatusOptions) {
+            $scope.call = result;
+            $scope.callStatusOptionsInDetail = callStatusOptions;
+            $ionicLoading.hide();
+        });
     });
 
 });
@@ -62,13 +71,10 @@ app.controller('CreateCallCtrl', function ($scope, $ionicLoading, $filter, $loca
         if (typeof (val) === 'undefined') {
             console.log('No date selected');
         } else {
-            $scope.datepickerObjForCallDate.inputDate = $filter('date')(val, 'yyyy-MM-dd');
-            //var temp=$filter('date')($scope.datepickerObjForCallDate.inputDate, 'yyyy-MM-dd');
-            //debugger;
+            $scope.datepickerObjForCallDate.inputDate = val;
         }
     };
     $scope.sendCall = function (data) {
-        data.start_date = '31/10/2015 05:45pm';
         $ionicLoading.show({
             templateUrl: 'templates/loading.html',
             animation: 'fade-in',
@@ -76,7 +82,7 @@ app.controller('CreateCallCtrl', function ($scope, $ionicLoading, $filter, $loca
             maxWidth: 200,
             showDelay: 0
         });
-        data.date_start = $scope.datepickerObjForCallDate.inputDate;
+        data.date_start = $filter('date')($scope.datepickerObjForCallDate.inputDate, "yyyy-MM-dd");
         CallService.sendCallInService(data, function (result) {
             $ionicLoading.hide();
             $scope.closeAddCallModal();
