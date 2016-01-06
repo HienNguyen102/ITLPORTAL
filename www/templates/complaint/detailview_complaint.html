@@ -31,7 +31,7 @@
                     <span class="input-label">Mô tả:</span>
                     <span class="item-text-wrap">{{complaint.description.value}}</span>
                 </label>
-                <div class="item card" href="#" ng-repeat="record in records" ng-if="record.name.value!='Attachment'">
+                <div class="item card" href="#" ng-repeat="record in records" ng-if="record.name.value!='Attachment' && recordsSize > 0">
                     <div class="item item-divider">
                         <p ng-if="record.name.value!='Attachment'">{{record.created_by_name.value}} [{{record.date_entered.value}}]</p>
                     </div>
