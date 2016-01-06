@@ -253,6 +253,8 @@ app.controller('ViewBookingCtrl', function ($scope, $ionicLoading, $stateParams,
                             bookingStatusOptions: bookingStatusOptions,
                         };
                         $scope.dataBooking = dataBooking;
+                        //Luu booking id de sau nay tao complaint
+                        localStorage.setItem("c_booking_cases_1c_booking_ida",dataBooking.bookingInfo.id.value);
                         $ionicLoading.hide();
                     });
                 });
