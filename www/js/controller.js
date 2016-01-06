@@ -113,7 +113,23 @@ app.controller('MenuCtrl', function ($scope, $ionicSideMenuDelegate, $ionicModal
     $scope.$on('$destroy', function () {
         $scope.addCallModal.remove();
     });
-
+    //AddComplaint Modal
+    $ionicModal.fromTemplateUrl('templates/booking/addComplaintView.html', function(addComplaintModal){
+        $scope.addComplaintModal = addComplaintModal;
+    },{
+        scope: $scope,
+        animation: 'slide-in-up',
+        focusFirstInput: true
+    });
+    $scope.openAddComplaintModal = function() {
+        $scope.addComplaintModal.show();
+    };
+    $scope.closeAddComplaintModal = function() {
+        $scope.addComplaintModal.hide();
+    };
+    $scope.$on('$destroy', function(){
+        $scope.addComplaintModal.remove();
+    });
     var userInfo = JSON.parse(JSON.parse(localStorage.getItem('data')).userInfo);
     $scope.customerName = userInfo.name;
 
