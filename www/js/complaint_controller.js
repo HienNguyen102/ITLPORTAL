@@ -172,14 +172,23 @@ app.controller('ViewComplaintCtrl', function ($scope, $cookies, $ionicLoading, $
         $ionicLoading.hide();
         $scope.complaint = result;
         //console.log(relationship_list);
-        if (relationship_list[0].length > 1) {
-            $scope.shipment = relationship_list[0][0].records[0].name.value;
+        if (relationship_list[0][0].name == 'c_booking_cases_1') {
             $scope.shipmentTitle = "Lô hàng:";
-            $scope.records = relationship_list[0][1].records;
+            $scope.shipment = relationship_list[0][0].records[0].name.value;
+            if(relationship_list[0].length>1){
+                $scope.records = relationship_list[0][1].records;
+                $scope.recordsSize=$scope.records.length;
+            }else{
+                $scope.recordsSize=0;
+            }
         } else {
+            $scope.shipmentTitle = "";
             $scope.shipment = "";
-            if (relationship_list[0].length > 0) {
+            if(relationship_list[0][0].records.length>0){
                 $scope.records = relationship_list[0][0].records;
+                $scope.recordsSize=$scope.records.length;
+            }else{
+                $scope.recordsSize=0;
             }
         }
     });
@@ -360,6 +369,7 @@ app.controller('ViewAttachmentCtrl', function ($scope, $cookies, $cookieStore, $
         },
         dataType: "json",
         success: function (response) {
+            debugger;
 
             var fileName = response.note_attachment.filename;
             $scope.filenameAttachment = fileName;
@@ -395,4 +405,23 @@ app.controller('ViewAttachmentCtrl', function ($scope, $cookies, $cookieStore, $
         }
         $ionicHistory.goBack(backCount);
     };
+});
+
+app.controller('CreateComplaintCtrl', function ($scope, $ionicLoading, $filter, $location, ComplaintService) {
+    $scope.sendNewComplaint = function (data) {
+        $ionicLoading.show({
+            templateUrl: 'templates/loading.html',
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+        });
+        ComplaintService.sendNewComplaintInService(data, function (result) {
+            $ionicLoading.hide();
+            $scope.closeAddComplaintModal();
+            if (result.id != '') {
+                $location.path('main/menu/view_complaint/' + result.id);
+            }
+        });
+    }
 });

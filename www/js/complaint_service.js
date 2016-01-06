@@ -161,6 +161,7 @@ app.service('ComplaintService', function () {
                             file: fileContent
                         }
                     };
+                    debugger;
                     var json_set_note_attachment = JSON.stringify(para_set_not_att);
                     $.ajax({
                         url: apiUrl,
@@ -176,14 +177,23 @@ app.service('ComplaintService', function () {
                             //console.log(response);
                             getComplaintById2(caseId, function (result, relationship_list) {
                                 $scope.complaint = result;
-                                if (relationship_list[0].length > 1) {
-                                    $scope.shipment = relationship_list[0][0].records[0].name.value;
+                                if (relationship_list[0][0].name == 'c_booking_cases_1') {
                                     $scope.shipmentTitle = "Lô hàng:";
-                                    $scope.records = relationship_list[0][1].records;
+                                    $scope.shipment = relationship_list[0][0].records[0].name.value;
+                                    if(relationship_list[0].length>1){
+                                        $scope.records = relationship_list[0][1].records;
+                                        $scope.recordsSize=$scope.records.length;
+                                    }else{
+                                        $scope.recordsSize=0;
+                                    }
                                 } else {
+                                    $scope.shipmentTitle = "";
                                     $scope.shipment = "";
-                                    if (relationship_list[0].length > 0) {
+                                    if(relationship_list[0][0].records.length>0){
                                         $scope.records = relationship_list[0][0].records;
+                                        $scope.recordsSize=$scope.records.length;
+                                    }else{
+                                        $scope.recordsSize=0;
                                     }
                                 }
                                 $ionicLoading.hide();
@@ -204,14 +214,23 @@ app.service('ComplaintService', function () {
                 } else {
                     getComplaintById2(caseId, function (result, relationship_list) {
                         $scope.complaint = result;
-                        if (relationship_list[0].length > 1) {
-                            $scope.shipment = relationship_list[0][0].records[0].name.value;
+                        if (relationship_list[0][0].name == 'c_booking_cases_1') {
                             $scope.shipmentTitle = "Lô hàng:";
-                            $scope.records = relationship_list[0][1].records;
+                            $scope.shipment = relationship_list[0][0].records[0].name.value;
+                            if(relationship_list[0].length>1){
+                                $scope.records = relationship_list[0][1].records;
+                                $scope.recordsSize=$scope.records.length;
+                            }else{
+                                $scope.recordsSize=0;
+                            }
                         } else {
+                            $scope.shipmentTitle = "";
                             $scope.shipment = "";
-                            if (relationship_list[0].length > 0) {
+                            if(relationship_list[0][0].records.length>0){
                                 $scope.records = relationship_list[0][0].records;
+                                $scope.recordsSize=$scope.records.length;
+                            }else{
+                                $scope.recordsSize=0;
                             }
                         }
                         $ionicLoading.hide();
@@ -227,6 +246,65 @@ app.service('ComplaintService', function () {
             },
             error: function () {
                 alert('Set note error');
+            }
+        });
+    };
+    this.sendNewComplaintInService = function (complaintData, callback) {
+
+        var sessionId = JSON.parse(localStorage.getItem('data')).sessionId;
+        var userInfo = JSON.parse(localStorage.getItem('data')).userInfo;
+        var accountId = JSON.parse(userInfo).id;
+        var assingedUserId = JSON.parse(JSON.parse(localStorage.getItem('data')).userInfo).assigned_user_id;
+        //c_booking_cases_1c_booking_ida
+        var setCaseParams = {
+            session: sessionId,
+            module_name: "Cases",
+            name_value_list: [
+                {
+                    name: "name",
+                    value: complaintData.name
+                },
+                {
+                    name: "description",
+                    value: complaintData.description
+                },
+                {
+                    name: "priority",
+                    value: 'P1'
+                },
+                {
+                    name: "account_id",
+                    value: accountId
+                },
+                {
+                    name: "status",
+                    value: "New"
+                },
+                {
+                    name: "assigned_user_id",
+                    value: assingedUserId
+                },
+                {
+                    name: "c_booking_cases_1c_booking_ida",
+                    value: localStorage.getItem("c_booking_cases_1c_booking_ida")
+                }
+            ]
+        }
+        setCaseParams = JSON.stringify(setCaseParams);
+        //debugger;
+        $.ajax({
+            type: "POST",
+            url: apiUrl,
+            data: {
+                method: "set_entry",
+                input_type: "JSON",
+                response_type: "JSON",
+                rest_data: setCaseParams,
+            },
+            dataType: "json",
+            success: function (response) {
+                //debugger;
+                callback(response);
             }
         });
     }
