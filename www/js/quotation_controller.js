@@ -11,8 +11,8 @@ app.controller('ListQuotationCtrl', function ($scope, $ionicLoading, $stateParam
     var accountId = JSON.parse(userInfo).id;
     QuotationService.getQuoteList(sessionId, accountId, function (result) {
         $scope.quotelist = result.sort(function (a, b) {
-                return new Date(b.quotation_date).getTime() - new Date(a.quotation_date).getTime()
-            });
+            return new Date(b.quotation_date).getTime() - new Date(a.quotation_date).getTime()
+        });
         $ionicLoading.hide();
     });
     var fbInstance;
@@ -29,6 +29,10 @@ app.controller('ListQuotationCtrl', function ($scope, $ionicLoading, $stateParam
 });
 
 app.controller('ViewQuotationCtrl', function ($scope, $ionicLoading, $ionicModal, $stateParams, QuotationService, Language, UtilService) {
+    var sessionId = JSON.parse(localStorage.getItem('data')).sessionId;
+    var userInfo = JSON.parse(localStorage.getItem('data')).userInfo;
+    var accountId = JSON.parse(userInfo).id;
+    var quoteId = $stateParams.quoteid;
     $ionicLoading.show({
         templateUrl: 'templates/loading.html',
         animation: 'fade-in',
@@ -36,10 +40,6 @@ app.controller('ViewQuotationCtrl', function ($scope, $ionicLoading, $ionicModal
         maxWidth: 200,
         showDelay: 0
     });
-    var sessionId = JSON.parse(localStorage.getItem('data')).sessionId;
-    var userInfo = JSON.parse(localStorage.getItem('data')).userInfo;
-    var accountId = JSON.parse(userInfo).id;
-    var quoteId = $stateParams.quoteid;
     QuotationService.getQuotationById(sessionId, quoteId, function (result) {
         var routeList = result.routeList;
         var quotation = result.quotationInfo;

@@ -90,15 +90,7 @@
             // Show an alert box if a notification comes in when the user is in your app.
             window.plugins.OneSignal.getIds(function (ids) {
                 localStorage.setItem("userIdForPushNoti", ids.userId);
-                //alert(localStorage.getItem("userIdForPushNoti"));
             });
-            //localStorage.setItem("userIdForPushNoti", "test 2");
-            /*var Pushbots = PushbotsPlugin.initialize("55b3a03d1779591f3c8b4569", {"android":{"sender_id":"974837693249"}});
-            Pushbots.on("registration", function(token){
-                    //console.log(token);
-                    alert(token);
-                    localStorage.setItem("userIdForPushNoti", token);
-                });*/
             angular.bootstrap(document, ['ionicApp']);
         }, false);
     </script>

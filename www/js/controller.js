@@ -113,6 +113,7 @@ app.controller('MenuCtrl', function ($scope, $ionicSideMenuDelegate, $ionicModal
     $scope.$on('$destroy', function () {
         $scope.addCallModal.remove();
     });
+    
     //AddComplaint Modal
     $ionicModal.fromTemplateUrl('templates/booking/addComplaintView.html', function(addComplaintModal){
         $scope.addComplaintModal = addComplaintModal;

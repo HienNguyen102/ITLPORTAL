@@ -25,7 +25,7 @@ app.service('ContractService', function () {
                 var contractListParamsRequest = {
                     session: sessionId,
                     module_name: "C_Contracts",
-                    //query: "calls.parent_id ='" + accountId + "'",
+                    query: "c_contracts.contract_account_id ='" + accountId + "'",
                     max_results: totalRow,
                     order_by: "date_entered desc"
                 };
